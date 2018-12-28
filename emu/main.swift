@@ -5,7 +5,7 @@ func main() {
   let cpu = CPU(mmu: mmu)
   
   while true {
-    cpu.execute()
+//    cpu.execute()
   }
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A838A0521D149AA00E38258 /* CPU+Registers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A838A0421D149AA00E38258 /* CPU+Registers.swift */; };
 		0A9EF02220C33F9B004E1C7F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9EF02120C33F9B004E1C7F /* main.swift */; };
 		0A9EF02920C34045004E1C7F /* CPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9EF02820C34045004E1C7F /* CPU.swift */; };
 		0A9EF02B20C3404F004E1C7F /* MMU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9EF02A20C3404F004E1C7F /* MMU.swift */; };
@@ -26,6 +27,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0A838A0421D149AA00E38258 /* CPU+Registers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CPU+Registers.swift"; sourceTree = "<group>"; };
 		0A9EF01E20C33F9B004E1C7F /* emu */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = emu; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A9EF02120C33F9B004E1C7F /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		0A9EF02820C34045004E1C7F /* CPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPU.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 			children = (
 				0A9EF02120C33F9B004E1C7F /* main.swift */,
 				0A9EF02820C34045004E1C7F /* CPU.swift */,
+				0A838A0421D149AA00E38258 /* CPU+Registers.swift */,
 				0A9EF02A20C3404F004E1C7F /* MMU.swift */,
 				0A9EF02C20C3434C004E1C7F /* Instructions.swift */,
 			);
@@ -128,6 +131,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A838A0521D149AA00E38258 /* CPU+Registers.swift in Sources */,
 				0A9EF02920C34045004E1C7F /* CPU.swift in Sources */,
 				0A9EF02B20C3404F004E1C7F /* MMU.swift in Sources */,
 				0A9EF02D20C3434C004E1C7F /* Instructions.swift in Sources */,
@@ -255,7 +259,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7VHDXN8BEL;
+				DEVELOPMENT_TEAM = GCDJ389U9P;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
@@ -265,7 +269,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 7VHDXN8BEL;
+				DEVELOPMENT_TEAM = GCDJ389U9P;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 			};
