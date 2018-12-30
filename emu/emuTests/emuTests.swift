@@ -14,7 +14,7 @@ class emuTests: XCTestCase {
 
   
   func testLD_R_NN() {
-    ld_r_nn(.a)(cpu)
+    I.ld_r_nn(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 1)
   }
@@ -23,7 +23,7 @@ class emuTests: XCTestCase {
     mmu.read16 = 2
     
     cpu.registers.a = 255
-    ld_nn_r(.a)(cpu)
+    I.ld_nn_r(.a)(cpu)
     
     XCTAssertEqual(mmu.write8, 255)
     XCTAssertEqual(mmu.writeAddress, 2)
@@ -32,7 +32,7 @@ class emuTests: XCTestCase {
   func test8BitLoad() {
     cpu.registers.a = 255
     
-    ld_r_r(.b, .a)(cpu)
+    I.ld_r_r(.b, .a)(cpu)
     
     XCTAssertEqual(cpu.registers.b, cpu.registers.a)
   }
@@ -41,7 +41,7 @@ class emuTests: XCTestCase {
     mmu.read8 = 32
     cpu.registers.hl = 0x0f
     
-    ld_r_r(.b, .hl)(cpu)
+    I.ld_r_r(.b, .hl)(cpu)
     
     XCTAssertEqual(cpu.registers.b, 32)
     XCTAssertEqual(mmu.readAddress, 0x0f)
@@ -52,7 +52,7 @@ class emuTests: XCTestCase {
     cpu.registers.bc = 0x02
     cpu.registers.hl = 0x0f
     
-    ld_r_r(.bc, .hl)(cpu)
+    I.ld_r_r(.bc, .hl)(cpu)
     
     XCTAssertEqual(mmu.readAddress, 0x0f)
     XCTAssertEqual(mmu.writeAddress, 0x02)
@@ -61,14 +61,14 @@ class emuTests: XCTestCase {
   
   func testLD_A_N() {
     cpu.registers.b = 255
-    ld_a_n(.b)(cpu)
+    I.ld_a_n(.b)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 255)
   }
   
   func testLD_N_A() {
     cpu.registers.a = 255
-    ld_n_a(.b)(cpu)
+    I.ld_n_a(.b)(cpu)
     
     XCTAssertEqual(cpu.registers.b, 255)
   }
@@ -77,7 +77,7 @@ class emuTests: XCTestCase {
     mmu.read8 = 48
     cpu.registers.c = 0xFF
     
-    ld_a_c()(cpu)
+    I.ld_a_c()(cpu)
     
     XCTAssertEqual(mmu.readAddress, 0xFFFF)
     XCTAssertEqual(cpu.registers.a, 48)
@@ -87,7 +87,7 @@ class emuTests: XCTestCase {
     cpu.registers.a = 48
     cpu.registers.c = 0xFF
     
-    ld_c_a()(cpu)
+    I.ld_c_a()(cpu)
     
     XCTAssertEqual(mmu.writeAddress, 0xFFFF)
     XCTAssertEqual(mmu.write8, 48)
@@ -97,7 +97,7 @@ class emuTests: XCTestCase {
     mmu.read8 = 14
     cpu.registers.hl = 32
     
-    ld_a_hl_dec()(cpu)
+    I.ld_a_hl_dec()(cpu)
     
     XCTAssertEqual(mmu.readAddress, 32)
     XCTAssertEqual(cpu.registers.a, 14)
@@ -108,7 +108,7 @@ class emuTests: XCTestCase {
     mmu.read8 = 14
     cpu.registers.hl = 32
     
-    ld_a_hl_inc()(cpu)
+    I.ld_a_hl_inc()(cpu)
     
     XCTAssertEqual(mmu.readAddress, 32)
     XCTAssertEqual(cpu.registers.a, 14)
@@ -119,7 +119,7 @@ class emuTests: XCTestCase {
     cpu.registers.a = 255
     cpu.registers.hl = 32
     
-    ld_hl_a_dec()(cpu)
+    I.ld_hl_a_dec()(cpu)
     
     XCTAssertEqual(mmu.writeAddress, 32)
     XCTAssertEqual(mmu.write8, 255)
@@ -130,7 +130,7 @@ class emuTests: XCTestCase {
     cpu.registers.a = 255
     cpu.registers.hl = 32
 
-    ld_hl_a_inc()(cpu)
+    I.ld_hl_a_inc()(cpu)
     
     XCTAssertEqual(mmu.writeAddress, 32)
     XCTAssertEqual(mmu.write8, 255)
@@ -141,7 +141,7 @@ class emuTests: XCTestCase {
     cpu.registers.a = 255
     mmu.read8 = 0xFF
     
-    ldh_n_a()(cpu)
+    I.ldh_n_a()(cpu)
     
     XCTAssertEqual(mmu.writeAddress, 0xFFFF)
     XCTAssertEqual(mmu.write8, 255)
@@ -150,7 +150,7 @@ class emuTests: XCTestCase {
   func testLDH_A_N() {
     mmu.read8 = 0xFF
     
-    ldh_a_n()(cpu)
+    I.ldh_a_n()(cpu)
     
     XCTAssertEqual(mmu.readAddress, 0xFFFF)
     XCTAssertEqual(cpu.registers.a, 0xFF)
@@ -158,14 +158,14 @@ class emuTests: XCTestCase {
   
   func testLDD_R_NN() {
     mmu.read16 = 0xFF00
-    ldd_r_nn(.bc)(cpu)
+    I.ldd_r_nn(.bc)(cpu)
     
     XCTAssertEqual(cpu.registers.bc, 0xFF00)
   }
   
   func testLDD_SP_HL() {
     cpu.registers.hl = 0xFF00
-    ldd_sp_hl()(cpu)
+    I.ldd_sp_hl()(cpu)
     
     XCTAssertEqual(cpu.registers.sp, 0xFF00)
   }
@@ -174,7 +174,7 @@ class emuTests: XCTestCase {
     mmu.read8 = 1
     cpu.registers.sp = 1
     
-    ldd_hl_sp_n()(cpu)
+    I.ldd_hl_sp_n()(cpu)
     
     XCTAssertEqual(cpu.registers.hl, 2)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0x0)
@@ -182,14 +182,14 @@ class emuTests: XCTestCase {
     mmu.read8 = 0xFF
     cpu.registers.sp = 0x00FF
 
-    ldd_hl_sp_n()(cpu)
+    I.ldd_hl_sp_n()(cpu)
     XCTAssertEqual(cpu.registers.hl, 510)
-    XCTAssertEqual(cpu.registers.flags.byteValue, 0b100000)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b110000)
     
     mmu.read8 = 0xFF
     cpu.registers.sp = 0xFFFF
     
-    ldd_hl_sp_n()(cpu)
+    I.ldd_hl_sp_n()(cpu)
     XCTAssertEqual(cpu.registers.hl, 254)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0b110000)
   }
@@ -197,7 +197,7 @@ class emuTests: XCTestCase {
   func testLDD_NN_SP() {
     mmu.read16 = 753
     
-    ldd_nn_sp()(cpu)
+    I.ldd_nn_sp()(cpu)
     
     XCTAssertEqual(cpu.registers.sp, 753)
   }
@@ -206,7 +206,7 @@ class emuTests: XCTestCase {
     cpu.registers.hl = 0xFF
     cpu.registers.sp = 100
     
-    push(.hl)(cpu)
+    I.push(.hl)(cpu)
     
     XCTAssertEqual(cpu.registers.sp, 98)
     XCTAssertEqual(mmu.writeAddress, 98)
@@ -217,7 +217,7 @@ class emuTests: XCTestCase {
     mmu.read16 = 0xFF
     cpu.registers.sp = 100
     
-    pop(.hl)(cpu)
+    I.pop(.hl)(cpu)
     
     XCTAssertEqual(cpu.registers.sp, 102)
     XCTAssertEqual(mmu.readAddress, 100)
@@ -225,26 +225,165 @@ class emuTests: XCTestCase {
   }
   
   func testAdd() {
-    addValue(in: .a, a: 1, b: 1)(cpu)
+    I.addValue(in: .a, a: 1, b: 1)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 2)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
     
-    addValue(in: .a, a: 0, b: 0)(cpu)
+    I.addValue(in: .a, a: 0, b: 0)(cpu)
     XCTAssertEqual(cpu.registers.a, 0)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0b10000000)
     
-    addValue(in: .a, a: 62, b: 34)(cpu)
+    I.addValue(in: .a, a: 62, b: 34)(cpu)
     XCTAssertEqual(cpu.registers.a, 96)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0b00100000)
     
-    addValue(in: .a, a: 0xF0, b: 0xF0)(cpu)
+    I.addValue(in: .a, a: 0xF0, b: 0xF0)(cpu)
     XCTAssertEqual(cpu.registers.a, 224)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0b00010000)
     
-    addValue(in: .a, a: 0xFF, b: 0xFF)(cpu)
+    I.addValue(in: .a, a: 0xFF, b: 0xFF)(cpu)
     XCTAssertEqual(cpu.registers.a, 254)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0b00110000)
+  }
+  
+  func testSub() {
+    I.subValue(in: .a, a: 5, b: 3)(cpu)
+    XCTAssertEqual(cpu.registers.a, 2)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b01000000)
+    
+    I.subValue(in: .a, a: 0b10000, b: 0b1111)(cpu)
+    XCTAssertEqual(cpu.registers.a, 1)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b01100000)
+    
+    I.subValue(in: .a, a: 1, b: 2)(cpu)
+    XCTAssertEqual(cpu.registers.a, 255)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b01110000)
+  }
+  
+  func testSBC_A() {
+    mmu.read8 = 3
+    cpu.registers.a = 10
+    cpu.registers.b = 5
+    cpu.registers.flags.c = true
+    
+    
+    I.sbc_a(.b)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 4)
+    
+    I.sbc_a_n()(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 1)
+  }
+  
+  func testAND_A() {
+    cpu.registers.a = 0b1
+    
+    I.and_a(0b1)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b1)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
+    
+    I.and_a(0b0)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b0)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b10000000)
+  }
+  
+  func testOR_A() {
+    cpu.registers.a = 0b1
+    
+    I.or_a(0b1)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b1)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
+    
+    I.or_a(0b0)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b1)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
+    
+    cpu.registers.a = 0b0
+    I.or_a(0b0)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b0)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b10000000)
+  }
+  
+  func testXOR_A() {
+    cpu.registers.a = 0b1
+    
+    I.xor_a(0b1)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b0)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b10000000)
+    
+    I.xor_a(0b0)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b0)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b10000000)
+    
+    cpu.registers.a = 0b1
+    I.xor_a(0b0)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b1)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
+  }
+  
+  func testCompare_A() {
+    cpu.registers.a = 10
+    I.cp_a(10)(cpu)
+    XCTAssertEqual(cpu.registers.a, 10)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b11000000)
+    
+    cpu.registers.a = 10
+    I.cp_a(9)(cpu)
+    XCTAssertEqual(cpu.registers.a, 10)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b01000000)
+    
+    I.cp_a(11)(cpu)
+    XCTAssertEqual(cpu.registers.a, 10)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b01110000)
+  }
+  
+  func testIncrement() {
+    cpu.registers.a = 10
+    I.inc(.a)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 11)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
+    
+    cpu.registers.a = 0b1111
+    I.inc(.a)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b10000)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b00100000)
+    
+    cpu.registers.flags.c = true
+    cpu.registers.a = 0b1111
+    I.inc(.a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b10000)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b00110000)
+    
+    cpu.registers.a = 0xFF
+    I.inc(.a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b0)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b10110000)
+  }
+  
+  func testDecrement() {
+    cpu.registers.a = 10
+    I.dec(.a)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 9)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b01000000)
+    
+    cpu.registers.a = 1
+    I.dec(.a)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b11000000)
   }
 }
 
