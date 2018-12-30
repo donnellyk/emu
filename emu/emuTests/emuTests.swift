@@ -156,7 +156,96 @@ class emuTests: XCTestCase {
     XCTAssertEqual(cpu.registers.a, 0xFF)
   }
   
+  func testLDD_R_NN() {
+    mmu.read16 = 0xFF00
+    ldd_r_nn(.bc)(cpu)
+    
+    XCTAssertEqual(cpu.registers.bc, 0xFF00)
+  }
   
+  func testLDD_SP_HL() {
+    cpu.registers.hl = 0xFF00
+    ldd_sp_hl()(cpu)
+    
+    XCTAssertEqual(cpu.registers.sp, 0xFF00)
+  }
+  
+  func testLDD_SP_HL_N() {
+    mmu.read8 = 1
+    cpu.registers.sp = 1
+    
+    ldd_hl_sp_n()(cpu)
+    
+    XCTAssertEqual(cpu.registers.hl, 2)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0x0)
+    
+    mmu.read8 = 0xFF
+    cpu.registers.sp = 0x00FF
+
+    ldd_hl_sp_n()(cpu)
+    XCTAssertEqual(cpu.registers.hl, 510)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b100000)
+    
+    mmu.read8 = 0xFF
+    cpu.registers.sp = 0xFFFF
+    
+    ldd_hl_sp_n()(cpu)
+    XCTAssertEqual(cpu.registers.hl, 254)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b110000)
+  }
+  
+  func testLDD_NN_SP() {
+    mmu.read16 = 753
+    
+    ldd_nn_sp()(cpu)
+    
+    XCTAssertEqual(cpu.registers.sp, 753)
+  }
+  
+  func testPush() {
+    cpu.registers.hl = 0xFF
+    cpu.registers.sp = 100
+    
+    push(.hl)(cpu)
+    
+    XCTAssertEqual(cpu.registers.sp, 98)
+    XCTAssertEqual(mmu.writeAddress, 98)
+    XCTAssertEqual(mmu.write16, 0xFF)
+  }
+  
+  func testPop() {
+    mmu.read16 = 0xFF
+    cpu.registers.sp = 100
+    
+    pop(.hl)(cpu)
+    
+    XCTAssertEqual(cpu.registers.sp, 102)
+    XCTAssertEqual(mmu.readAddress, 100)
+    XCTAssertEqual(cpu.registers.hl, 0xFF)
+  }
+  
+  func testAdd() {
+    addValue(in: .a, a: 1, b: 1)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 2)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
+    
+    addValue(in: .a, a: 0, b: 0)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b10000000)
+    
+    addValue(in: .a, a: 62, b: 34)(cpu)
+    XCTAssertEqual(cpu.registers.a, 96)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b00100000)
+    
+    addValue(in: .a, a: 0xF0, b: 0xF0)(cpu)
+    XCTAssertEqual(cpu.registers.a, 224)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b00010000)
+    
+    addValue(in: .a, a: 0xFF, b: 0xFF)(cpu)
+    XCTAssertEqual(cpu.registers.a, 254)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b00110000)
+  }
 }
 
 class MockMMU: MMU {

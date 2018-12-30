@@ -218,7 +218,7 @@ func add_a(_ register: Register) -> Operation {
       value = register.get8($0)
     }
     
-    add(in: .a, a: $0.registers.a, b: value)($0)
+    addValue(in: .a, a: $0.registers.a, b: value)($0)
   }
 }
 
@@ -227,11 +227,11 @@ func adc_a(_ register: Register) -> Operation {
     let carry = $0.registers.flags.c.bit
     
     add_a(register)($0)
-    add(in: .a, a: $0.registers.a, b: carry)($0)
+    addValue(in: .a, a: $0.registers.a, b: carry)($0)
   }
 }
 
-func add(in: Register, a: UInt8, b: UInt8) -> Operation {
+func addValue(in register: Register, a: UInt8, b: UInt8) -> Operation {
   return {
     let val = a &+ b
    
@@ -239,6 +239,8 @@ func add(in: Register, a: UInt8, b: UInt8) -> Operation {
     $0.registers.flags.n = false
     $0.registers.flags.h = checkForHalfCarry(a, b)
     $0.registers.flags.c = checkForCarry(a, b)
+    
+    register.set(val, in: $0)
   }
 }
 
