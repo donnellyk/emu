@@ -86,7 +86,7 @@ enum Register {
     case .hl:
       return cpu.registers.hl
     default:
-      fatalError("Can not read UInt16 from non 8-bit register")
+      return UInt16(get8(cpu))
     }
   }
   

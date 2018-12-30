@@ -12,42 +12,6 @@ struct Instruction {
   }
 }
 
-
-//struct LD: Instruction {
-//  let opcode: Int
-//
-//  let operation: (CPU) -> Void
-//
-//  init(opcode: Int, register: Register) {
-//    self.opcode = opcode
-//    self.operation = {
-//      let value: UInt8 = $0.readByte()
-//      register.set(value, in: $0)
-//    }
-//  }
-//}
-//
-//
-//
-//struct LDD: Instruction {
-//  let opcode: Int
-//  let operation: (CPU) -> Void
-//
-////  init(opcode: Int, register: Register) {
-////    self.opcode = opcode
-////    self.operation = {
-////      let value: UInt16 = $0.readWord()
-////      register.set(value, in: $0)
-////    }
-////  }
-//}
-
-//struct LDI : Instruction {
-//  let opcode: Int
-//  let operation: (CPU) -> Void
-//}
-
-
 let instructionTable: [Instruction] = [
   Instruction(opcode: 0x0, operation: { _ in })
 //  Instruction(opcode: 0x1, operation: ld_nn_n(.a))
@@ -152,7 +116,7 @@ func ld_a_hl_inc() -> Operation {
 func ld_hl_a_inc() -> Operation {
   return {
     ld_r_r(.hl, .a)($0)
-    dec(.hl)($0)
+    inc(.hl)($0)
   }
 }
 
