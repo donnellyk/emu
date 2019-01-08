@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A4A446921E4F48A00C7E8CB /* Instruction+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */; };
 		0AC6A44221D83AA000E3FA19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A44121D83AA000E3FA19 /* AppDelegate.swift */; };
 		0AC6A44421D83AA000E3FA19 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A44321D83AA000E3FA19 /* ViewController.swift */; };
 		0AC6A44621D83AA300E3FA19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AC6A44521D83AA300E3FA19 /* Assets.xcassets */; };
@@ -29,6 +30,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+Ext.swift"; sourceTree = "<group>"; };
 		0AC6A43E21D83AA000E3FA19 /* emu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AC6A44121D83AA000E3FA19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AC6A44321D83AA000E3FA19 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				0AC6A46221D83ACA00E3FA19 /* CPU.swift */,
 				0AC6A46321D83ACA00E3FA19 /* CPU+Registers.swift */,
 				0AC6A46021D83ACA00E3FA19 /* Instructions.swift */,
+				0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */,
 				0AC6A46121D83ACA00E3FA19 /* MMU.swift */,
 			);
 			path = device;
@@ -220,6 +223,7 @@
 				0AC6A46621D83ACA00E3FA19 /* CPU.swift in Sources */,
 				0AC6A44221D83AA000E3FA19 /* AppDelegate.swift in Sources */,
 				0AC6A46521D83ACA00E3FA19 /* MMU.swift in Sources */,
+				0A4A446921E4F48A00C7E8CB /* Instruction+Ext.swift in Sources */,
 				0AC6A46721D83ACA00E3FA19 /* CPU+Registers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
