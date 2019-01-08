@@ -21,6 +21,8 @@ typealias Operation = (CPU) -> Void
 
 
 struct I {
+  // MARK: - 8-Bit LOAD
+  
   /// Sets memory addressed at next byte of PC to register
   ///
   /// - Parameter register: <#register description#>
@@ -138,6 +140,8 @@ struct I {
     }
   }
   
+  // MARK: - 16-Bit LOAD
+  
   static func ldd_r_nn(_ register: Register) -> Operation {
     return {
       register.set($0.nextWord(), in: $0)
@@ -152,11 +156,12 @@ struct I {
   
   static func ldd_hl_sp_n() -> Operation {
     return {
-      let n = Int16($0.nextByte())
+      let n = Int8(bitPattern: $0.nextByte())
       $0.registers.hl = UInt16(truncatingIfNeeded: Int($0.registers.sp) + Int(n))
       
       $0.registers.flags.z = false
       $0.registers.flags.n = false
+      
       if n >= 0 {
         $0.registers.flags.c = (Int($0.registers.sp & 0xFF) + Int(n)) > 0xFF
         $0.registers.flags.h = (Int($0.registers.sp & 0xF) + Int(n)) > 0xF
@@ -173,6 +178,8 @@ struct I {
     }
   }
   
+  // MARK: - SP PUSH/POP
+  
   static func push(_ register: Register) -> Operation {
     return {
       $0.push(register.get16($0))
@@ -185,6 +192,8 @@ struct I {
     }
   }
   
+  
+  // MARK: - 8-BIT ALU
   
   static func dec(_ register: Register) -> Operation {
     return {
@@ -301,6 +310,8 @@ struct I {
       subValue(in: .a, a: $0.registers.a, b: carry)($0)
     }
   }
+
+// MARK: - LOGICAL OPERATIONS
   
   static func and_a_n() -> Operation {
     return {
@@ -310,7 +321,7 @@ struct I {
   
   static func and_a(_ register: Register) -> Operation {
     return {
-      and_a(valueFromRegister(register, in: $0))($0)
+      and_a(getValue(register, in: $0))($0)
     }
   }
   
@@ -327,7 +338,7 @@ struct I {
   
   static func or_a(_ register: Register) -> Operation {
     return {
-      or_a(valueFromRegister(register, in: $0))($0)
+      or_a(getValue(register, in: $0))($0)
     }
   }
   
@@ -343,7 +354,7 @@ struct I {
   
   static func xor_a(_ register: Register) -> Operation {
     return {
-      xor_a(valueFromRegister(register, in: $0))($0)
+      xor_a(getValue(register, in: $0))($0)
     }
   }
   
@@ -369,9 +380,11 @@ struct I {
     }
   }
   
+// MARK: - COMPARE
+  
   static func cp_a(_ register: Register) -> Operation {
     return {
-      cp_a(valueFromRegister(register, in: $0))($0)
+      cp_a(getValue(register, in: $0))($0)
     }
   }
   
@@ -387,6 +400,189 @@ struct I {
       subValue(in: .a, a: oldVal, b: value)($0)
       
       $0.registers.a = oldVal
+    }
+  }
+  
+  // MARK: - 16-bitt ALU
+  static func add_hl(_ register: Register) -> Operation {
+    return {
+      let a = $0.registers.hl
+      let b = register.get16($0)
+      
+      $0.registers.hl = a &+ b
+      
+      $0.registers.flags.n = false
+      $0.registers.flags.h = checkForHalfCarry(a, b)
+      $0.registers.flags.c = checkForCarry(a, b)
+    }
+  }
+  
+  static func add_sp() -> Operation {
+    return {
+      let a = $0.registers.sp
+      let n = Int8(bitPattern: $0.nextByte())
+      $0.registers.sp = UInt16(truncatingIfNeeded: Int(a) + Int(n))
+      
+      $0.registers.flags.z = false
+      $0.registers.flags.n = false
+      
+      // TODO: See if this can be generalized better
+      if n >= 0 {
+        $0.registers.flags.c = (Int(a & 0xFF) + Int(n)) > 0xFF
+        $0.registers.flags.h = (Int(a & 0xF) + Int(n)) > 0xF
+      } else {
+        $0.registers.flags.c = Int($0.registers.sp & 0xFF) <= Int(a & 0xFF)
+        $0.registers.flags.h = Int($0.registers.sp & 0xF) <= Int(a & 0xF)
+      }
+    }
+  }
+  
+// MARK: - MISC
+  static func swap_r(_ register: Register) -> Operation {
+    return {
+      let val = getValue(register, in: $0)
+      let upper = (val & 0xF0) >> 4
+      let lower = (val & 0x0F) << 4
+      
+      let swapped = lower | upper
+      
+      register.set(swapped, in: $0)
+      
+      $0.registers.flags.z = swapped == 0
+      $0.registers.flags.n = false
+      $0.registers.flags.h = false
+      $0.registers.flags.c = false
+    }
+  }
+  
+  static func DAA() -> Operation {
+    return {
+      var value = $0.registers.a
+      let correction: UInt8 = 0
+      
+      if $0.registers.flags.n { // subtraction
+        if $0.registers.flags.c { value = value &- 0x60 }
+        if $0.registers.flags.h { value = value &- 0x6 }
+      } else { // addition
+        if $0.registers.flags.c || value > 0x99 {
+          value = value &+ 0x60
+          $0.registers.flags.c = true
+        }
+        
+        if $0.registers.flags.h || value > 0x09 {
+          value = value &+ 0x6
+        }
+      }
+
+      $0.registers.flags.z = $0.registers.a == 0
+      $0.registers.flags.h = false
+    }
+  }
+  
+  static func CPL() -> Operation {
+    return {
+      $0.registers.a = ~$0.registers.a
+      
+      $0.registers.flags.n = true
+      $0.registers.flags.h = true
+    }
+  }
+  
+  static func CCF() -> Operation {
+    return {
+      $0.registers.flags.c = !$0.registers.flags.c
+      
+      $0.registers.flags.n = false
+      $0.registers.flags.h = false
+    }
+  }
+  
+  static func SCF() -> Operation {
+    return {
+      $0.registers.flags.c = true
+      
+      $0.registers.flags.n = false
+      $0.registers.flags.h = false
+    }
+  }
+  
+  static func RLCA() -> Operation {
+    return RLC(.a)
+  }
+
+  static func RLA() -> Operation {
+    return RL(.a)
+  }
+  
+  static func RRCA() -> Operation {
+    return RRC(.a)
+  }
+  
+  static func RRA() -> Operation {
+    return RR(.a)
+  }
+  
+  static func RLC(_ register: Register) -> Operation {
+    return {
+      let value = register.get8($0)
+      let msb = value >> 7
+      
+      let newValue = (value << 1) | msb
+      
+      register.set(newValue, in: $0)
+      
+      $0.registers.flags.n = newValue == 0
+      $0.registers.flags.n = false
+      $0.registers.flags.h = false
+      $0.registers.flags.c = msb == 1
+    }
+  }
+  
+  static func RL(_ register: Register) -> Operation {
+    return {
+      let value = register.get8($0)
+      let msb = value >> 7
+      
+      let newValue = (value << 1) | $0.registers.flags.c.bit
+      
+      register.set(newValue, in: $0)
+      
+      $0.registers.flags.n = newValue == 0
+      $0.registers.flags.n = false
+      $0.registers.flags.h = false
+      $0.registers.flags.c = msb == 1
+    }
+  }
+  
+  static func RRC(_ register: Register) -> Operation {
+    return {
+      let value = register.get8($0)
+      let lsb = value & 0b1
+      
+      let newValue = (value >> 1) | (lsb << 7)
+      
+      register.set(newValue, in: $0)
+      
+      $0.registers.flags.n = newValue == 0
+      $0.registers.flags.n = false
+      $0.registers.flags.h = false
+      $0.registers.flags.c = lsb == 1
+    }
+  }
+  
+  static func RR(_ register: Register) -> Operation {
+    return {
+      let value = register.get8($0)
+      let lsb = value & 0b1
+      
+      let newValue = ($0.registers.flags.c.bit << 7) | (value >> 1)
+      
+      register.set(newValue, in: $0)
+      
+      $0.registers.flags.n = newValue == 0
+      $0.registers.flags.n = false
+      $0.registers.flags.h = false
+      $0.registers.flags.c = lsb == 1
     }
   }
 }
@@ -422,7 +618,7 @@ private func checkForBorrow(_ a: UInt8, _ b: UInt8) -> Bool {
 ///
 /// - Parameter register: Register to get value from
 /// - Returns: UInt8 value from register
-private func valueFromRegister(_ register: Register, in cpu: CPU) -> UInt8 {
+private func getValue(_ register: Register, in cpu: CPU) -> UInt8 {
   if register == .hl {
     return cpu.mmu.read(register.get16(cpu))
   } else {

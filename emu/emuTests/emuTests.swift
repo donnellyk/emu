@@ -385,6 +385,123 @@ class emuTests: XCTestCase {
     XCTAssertEqual(cpu.registers.a, 0)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0b11000000)
   }
+  
+  func testAdd_HL() {
+    cpu.registers.hl = 45
+    cpu.registers.bc = 45
+    
+    I.add_hl(.bc)(cpu)
+    
+    XCTAssertEqual(cpu.registers.hl, 90)
+  }
+  
+  func testAdd_SP() {
+    mmu.read8 = 0b11111111
+    cpu.registers.sp = 2
+    
+    I.add_sp()(cpu)
+    
+    XCTAssertEqual(cpu.registers.sp, 1)
+  }
+  
+  func testSwap() {
+    cpu.registers.a = 0b00000001
+    cpu.registers.flags.set(z: true, n: true, h: true, c: true)
+    I.swap_r(.a)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b00010000)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
+    
+    cpu.registers.a = 0b00010000
+    I.swap_r(.a)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b00000001)
+    
+    cpu.registers.a = 0b0
+    I.swap_r(.a)(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b0)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b10000000)
+  }
+  
+  func testDAA() {
+    // Meh, do it later
+  }
+  
+  func testCPL() {
+    cpu.registers.a = 0b00000001
+    I.CPL()(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b11111110)
+  }
+  
+  func testCCF() {
+    cpu.registers.flags.c = true
+    I.CCF()(cpu)
+    XCTAssertEqual(cpu.registers.flags.c, false)
+  }
+  
+  func testSCF() {
+    I.SCF()(cpu)
+    XCTAssertEqual(cpu.registers.flags.c, true)
+  }
+  
+  func testRLCA() {
+    cpu.registers.a = 0b10000010
+    I.RLCA()(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b00000101)
+    XCTAssert(cpu.registers.flags.c)
+    
+    cpu.registers.a = 0b00000010
+    I.RLCA()(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b00000100)
+    XCTAssertFalse(cpu.registers.flags.c)
+  }
+  
+  func testRLA() {
+    cpu.registers.a = 0b10000010
+    I.RLA()(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b00000100)
+    XCTAssert(cpu.registers.flags.c)
+    
+    cpu.registers.a = 0b00000010
+    cpu.registers.flags.c = true
+    I.RLA()(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b00000101)
+    XCTAssertFalse(cpu.registers.flags.c)
+  }
+  
+  func testRRCA() {
+    cpu.registers.a = 0b10000001
+    I.RRCA()(cpu)
+
+    XCTAssertEqual(cpu.registers.a, 0b11000000)
+    XCTAssert(cpu.registers.flags.c)
+    
+    cpu.registers.a = 0b00000010
+    I.RRCA()(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b00000001)
+    XCTAssertFalse(cpu.registers.flags.c)
+  }
+  
+  func testRRA() {
+    cpu.registers.a = 0b10000001
+    I.RRA()(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b01000000)
+    XCTAssert(cpu.registers.flags.c)
+    
+    cpu.registers.a = 0b00000010
+    cpu.registers.flags.c = true
+    I.RRA()(cpu)
+    
+    XCTAssertEqual(cpu.registers.a, 0b10000001)
+    XCTAssertFalse(cpu.registers.flags.c)
+  }
 }
 
 class MockMMU: MMU {
