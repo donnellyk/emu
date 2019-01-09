@@ -72,6 +72,8 @@ enum Register {
       return cpu.registers.h
     case .l:
       return cpu.registers.l
+    case .hl:
+      return cpu.mmu.read(get16(cpu))
     default:
       fatalError("Can not read UInt8 from 16-bit register")
     }
@@ -182,7 +184,12 @@ public extension CPU {
 
 extension Bool {
   var bit: UInt8 {
-    return self ? 1 : 0
+    get {
+      return self ? 1 : 0
+    }
+    set {
+      self = (newValue == 1)
+    }
   }
 }
 
