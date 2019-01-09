@@ -129,4 +129,24 @@ extension I {
       $0.registers.flags.c = lsb == 1
     }
   }
+  
+  static func Bit(_ number: UInt8, _ register: Register) -> Operation {
+    return {
+      let value = register.get8($0)
+      let bit = (value >> number) & UInt8(0b1)
+      
+      $0.registers.flags.z = bit == 0
+      $0.registers.flags.n = false
+      $0.registers.flags.h = true
+    }
+  }
+  
+  static func Set(_ number: UInt8, _ register: Register) -> Operation {
+    return {
+      let value = register.get8($0)
+      let bit = UInt8(0b1) << number
+      
+      register.set(value | bit, in: $0)
+    }
+  }
 }
