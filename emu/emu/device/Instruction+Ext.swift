@@ -19,7 +19,7 @@ extension I {
   
   static func RLC(_ register: Register) -> Operation {
     return {
-      let value = getValue(register, in: $0)
+      let value = register.get8($0)
       let msb = value >> 7
       
       let newValue = (value << 1) | msb
@@ -35,7 +35,7 @@ extension I {
   
   static func RL(_ register: Register) -> Operation {
     return {
-      let value = getValue(register, in: $0)
+      let value = register.get8($0)
       let msb = value >> 7
       
       let newValue = (value << 1) | $0.registers.flags.c.bit
@@ -51,7 +51,7 @@ extension I {
   
   static func RRC(_ register: Register) -> Operation {
     return {
-      let value = getValue(register, in: $0)
+      let value = register.get8($0)
       let lsb = value & 0b1
       
       let newValue = (value >> 1) | (lsb << 7)
@@ -67,7 +67,7 @@ extension I {
   
   static func RR(_ register: Register) -> Operation {
     return {
-      let value = getValue(register, in: $0)
+      let value = register.get8($0)
       let lsb = value & 0b1
       
       let newValue = ($0.registers.flags.c.bit << 7) | (value >> 1)
@@ -99,7 +99,7 @@ extension I {
   
   static func SRA(_ register: Register) -> Operation {
     return {
-      let value = getValue(register, in: $0)
+      let value = register.get8($0)
       let lsb = value & 0b1
       let msb = value & 0x80
       
@@ -116,7 +116,7 @@ extension I {
   
   static func SRL(_ register: Register) -> Operation {
     return {
-      let value = getValue(register, in: $0)
+      let value = register.get8($0)
       let lsb = value & 0b1
       
       let newValue = (value >> 1)

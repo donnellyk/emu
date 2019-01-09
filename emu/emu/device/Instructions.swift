@@ -321,7 +321,7 @@ struct I {
   
   static func and_a(_ register: Register) -> Operation {
     return {
-      and_a(getValue(register, in: $0))($0)
+      and_a(register.get8($0))($0)
     }
   }
   
@@ -338,7 +338,7 @@ struct I {
   
   static func or_a(_ register: Register) -> Operation {
     return {
-      or_a(getValue(register, in: $0))($0)
+      or_a(register.get8($0))($0)
     }
   }
   
@@ -354,7 +354,7 @@ struct I {
   
   static func xor_a(_ register: Register) -> Operation {
     return {
-      xor_a(getValue(register, in: $0))($0)
+      xor_a(register.get8($0))($0)
     }
   }
   
@@ -384,7 +384,7 @@ struct I {
   
   static func cp_a(_ register: Register) -> Operation {
     return {
-      cp_a(getValue(register, in: $0))($0)
+      cp_a(register.get8($0))($0)
     }
   }
   
@@ -440,7 +440,7 @@ struct I {
 // MARK: - MISC
   static func swap_r(_ register: Register) -> Operation {
     return {
-      let val = getValue(register, in: $0)
+      let val = register.get8($0)
       let upper = (val & 0xF0) >> 4
       let lower = (val & 0x0F) << 4
       
@@ -531,17 +531,4 @@ private func checkForHalfBorrow(_ a: UInt8, _ b:UInt8) -> Bool {
 
 private func checkForBorrow(_ a: UInt8, _ b: UInt8) -> Bool {
   return a < a &- b
-}
-
-
-/// Gets value from all 8-bit registers and HL
-///
-/// - Parameter register: Register to get value from
-/// - Returns: UInt8 value from register
-private func getValue(_ register: Register, in cpu: CPU) -> UInt8 {
-  if register == .hl {
-    return cpu.mmu.read(register.get16(cpu))
-  } else {
-    return register.get8(cpu)
-  }
 }
