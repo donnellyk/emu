@@ -179,19 +179,19 @@ class emuTests: XCTestCase {
     XCTAssertEqual(cpu.registers.hl, 2)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0x0)
     
-    mmu.read8 = 0xFF
+    mmu.read8 = 0xFF // Twos-Compliment -1
     cpu.registers.sp = 0x00FF
 
     I.ldd_hl_sp_n()(cpu)
-    XCTAssertEqual(cpu.registers.hl, 510)
-    XCTAssertEqual(cpu.registers.flags.byteValue, 0b110000)
-    
-    mmu.read8 = 0xFF
-    cpu.registers.sp = 0xFFFF
-    
-    I.ldd_hl_sp_n()(cpu)
     XCTAssertEqual(cpu.registers.hl, 254)
     XCTAssertEqual(cpu.registers.flags.byteValue, 0b110000)
+    
+    mmu.read8 = 0x0F
+    cpu.registers.sp = 0xFFF0
+    
+    I.ldd_hl_sp_n()(cpu)
+    XCTAssertEqual(cpu.registers.hl, 65535)
+    XCTAssertEqual(cpu.registers.flags.byteValue, 0b0)
   }
   
   func testLDD_NN_SP() {
