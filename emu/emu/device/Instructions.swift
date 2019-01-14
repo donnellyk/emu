@@ -23,7 +23,7 @@ typealias Operation = (CPU) -> Void
 struct I {
   // MARK: - 8-Bit LOAD
   
-  /// Sets memory addressed at next byte of PC to register
+  /// Sets value addressed at next byte of PC to register
   ///
   /// - Parameter register: <#register description#>
   /// - Returns: Block to execute for load
