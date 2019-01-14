@@ -554,10 +554,10 @@ struct I {
       guard condition($0) else {
         return
       }
-      
+
+      let jump = $0.nextWord()
       $0.push($0.registers.pc)
-      
-      jump_nn()($0)
+      $0.registers.pc = jump
     }
   }
   
