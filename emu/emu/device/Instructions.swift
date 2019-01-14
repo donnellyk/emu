@@ -533,12 +533,12 @@ struct I {
   
   static func jr(_ condition: @escaping (CPU) -> Bool) -> Operation {
     return {
+      let a = $0.registers.pc
+      let n = Int8(bitPattern: $0.nextByte())
+
       guard condition($0) else {
         return
       }
-      
-      let a = $0.registers.pc
-      let n = Int8(bitPattern: $0.nextByte())
       
       $0.registers.pc = UInt16(truncatingIfNeeded: Int(a) + Int(n))
     }
