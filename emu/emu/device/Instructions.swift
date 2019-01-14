@@ -1,11 +1,19 @@
 import Foundation
 
+typealias Operation = (CPU) -> Void
+typealias CycleCalculation = (CPU) -> Int
+
+
 struct Instruction {
   var opcode: Int
-  var cycles: Int
+  var cycles: CycleCalculation
   var operation: Operation
   
   init(opcode: Int, operation: @escaping Operation, cycles: Int = 4) {
+    self.init(opcode: opcode, operation: operation, cycles: { _ in return cycles })
+  }
+  
+  init(opcode: Int, operation: @escaping Operation, cycles: @escaping CycleCalculation) {
     self.opcode = opcode
     self.cycles = cycles
     self.operation = operation
