@@ -1,6 +1,8 @@
 import Foundation
 
 public class CPU {
+  var masterInteruptFlag: Bool = false
+  
   let mmu: MMU
   let registers = Registers()
   

@@ -577,8 +577,7 @@ struct I {
   static func reti() -> Operation {
     return {
       ret{ _ in true }($0)
-      
-      // TODO: Enable interupts
+      $0.masterInteruptFlag = true
     }
   }
   
