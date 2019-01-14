@@ -137,12 +137,9 @@ public extension CPU {
     var pc:UInt16 = 0
     var sp:UInt16 = 0
     
-    
-    
     var af:UInt16 {
       return join(a, flags.byteValue)
     }
-    
     
     var bc: UInt16 {
       get {
