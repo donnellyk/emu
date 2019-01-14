@@ -430,30 +430,30 @@ class emuTests: XCTestCase {
   
   func testCPL() {
     cpu.registers.a = 0b00000001
-    I.CPL()(cpu)
+    I.cpl()(cpu)
     XCTAssertEqual(cpu.registers.a, 0b11111110)
   }
   
   func testCCF() {
     cpu.registers.flags.c = true
-    I.CCF()(cpu)
+    I.ccf()(cpu)
     XCTAssertEqual(cpu.registers.flags.c, false)
   }
   
   func testSCF() {
-    I.SCF()(cpu)
+    I.scf()(cpu)
     XCTAssertEqual(cpu.registers.flags.c, true)
   }
   
   func testRLCA() {
     cpu.registers.a = 0b10000010
-    I.RLCA()(cpu)
+    I.rlca()(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b00000101)
     XCTAssert(cpu.registers.flags.c)
     
     cpu.registers.a = 0b00000010
-    I.RLCA()(cpu)
+    I.rlca()(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b00000100)
     XCTAssertFalse(cpu.registers.flags.c)
@@ -461,14 +461,14 @@ class emuTests: XCTestCase {
   
   func testRLA() {
     cpu.registers.a = 0b10000010
-    I.RLA()(cpu)
+    I.rla()(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b00000100)
     XCTAssert(cpu.registers.flags.c)
     
     cpu.registers.a = 0b00000010
     cpu.registers.flags.c = true
-    I.RLA()(cpu)
+    I.rla()(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b00000101)
     XCTAssertFalse(cpu.registers.flags.c)
@@ -476,13 +476,13 @@ class emuTests: XCTestCase {
   
   func testRRCA() {
     cpu.registers.a = 0b10000001
-    I.RRCA()(cpu)
+    I.rrca()(cpu)
 
     XCTAssertEqual(cpu.registers.a, 0b11000000)
     XCTAssert(cpu.registers.flags.c)
     
     cpu.registers.a = 0b00000010
-    I.RRCA()(cpu)
+    I.rrca()(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b00000001)
     XCTAssertFalse(cpu.registers.flags.c)
@@ -490,14 +490,14 @@ class emuTests: XCTestCase {
   
   func testRRA() {
     cpu.registers.a = 0b10000001
-    I.RRA()(cpu)
+    I.rra()(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b01000000)
     XCTAssert(cpu.registers.flags.c)
     
     cpu.registers.a = 0b00000010
     cpu.registers.flags.c = true
-    I.RRA()(cpu)
+    I.rra()(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b10000001)
     XCTAssertFalse(cpu.registers.flags.c)
@@ -505,14 +505,14 @@ class emuTests: XCTestCase {
   
   func testSLA() {
     cpu.registers.a = 0b10000000
-    I.SLA(.a)(cpu)
+    I.sla(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b0)
     XCTAssert(cpu.registers.flags.c)
     XCTAssert(cpu.registers.flags.z)
     
     cpu.registers.a = 0b01000000
-    I.SLA(.a)(cpu)
+    I.sla(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b10000000)
     XCTAssertFalse(cpu.registers.flags.c)
@@ -521,42 +521,42 @@ class emuTests: XCTestCase {
   
   func testSRA() {
     cpu.registers.a = 0b00000001
-    I.SRA(.a)(cpu)
+    I.sra(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b0)
     XCTAssert(cpu.registers.flags.c)
     XCTAssert(cpu.registers.flags.z)
     
     cpu.registers.a = 0b00000010
-    I.SRA(.a)(cpu)
+    I.sra(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b1)
     XCTAssertFalse(cpu.registers.flags.c)
     XCTAssertFalse(cpu.registers.flags.z)
     
     cpu.registers.a = 0b10000000
-    I.SRA(.a)(cpu)
+    I.sra(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b11000000)
   }
   
   func testSRL() {
     cpu.registers.a = 0b00000001
-    I.SRL(.a)(cpu)
+    I.srl(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b0)
     XCTAssert(cpu.registers.flags.c)
     XCTAssert(cpu.registers.flags.z)
     
     cpu.registers.a = 0b00000010
-    I.SRL(.a)(cpu)
+    I.srl(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b1)
     XCTAssertFalse(cpu.registers.flags.c)
     XCTAssertFalse(cpu.registers.flags.z)
     
     cpu.registers.a = 0b10000000
-    I.SRL(.a)(cpu)
+    I.srl(.a)(cpu)
     
     XCTAssertEqual(cpu.registers.a, 0b01000000)
   }
@@ -564,52 +564,72 @@ class emuTests: XCTestCase {
   func testBit() {
     cpu.registers.flags.z = true
     cpu.registers.a = 0b00000001
-    I.Bit(0, .a)(cpu)
+    I.bit(0, .a)(cpu)
     
     XCTAssertFalse(cpu.registers.flags.z)
     
     cpu.registers.flags.z = false
     cpu.registers.a = 0b00000000
-    I.Bit(0, .a)(cpu)
+    I.bit(0, .a)(cpu)
     XCTAssert(cpu.registers.flags.z)
     
-    I.Bit(1, .a)(cpu)
+    I.bit(1, .a)(cpu)
     XCTAssert(cpu.registers.flags.z)
     
-    I.Bit(3, .a)(cpu)
+    I.bit(3, .a)(cpu)
     XCTAssert(cpu.registers.flags.z)
     
-    I.Bit(5, .a)(cpu)
+    I.bit(5, .a)(cpu)
     XCTAssert(cpu.registers.flags.z)
     
-    I.Bit(7, .a)(cpu)
+    I.bit(7, .a)(cpu)
     XCTAssert(cpu.registers.flags.z)
     
     cpu.registers.flags.z = true
     cpu.registers.a = 0b00001000
-    I.Bit(3, .a)(cpu)
+    I.bit(3, .a)(cpu)
     
     XCTAssertFalse(cpu.registers.flags.z)
   }
   
   func testSet() {
     cpu.registers.a = 0b00000000
-    I.Set(0, .a)(cpu)
+    I.set(0, .a)(cpu)
     XCTAssertEqual(cpu.registers.a, 0b00000001)
-    I.Set(1, .a)(cpu)
+    I.set(1, .a)(cpu)
     XCTAssertEqual(cpu.registers.a, 0b00000011)
-    I.Set(2, .a)(cpu)
+    I.set(2, .a)(cpu)
     XCTAssertEqual(cpu.registers.a, 0b00000111)
-    I.Set(3, .a)(cpu)
+    I.set(3, .a)(cpu)
     XCTAssertEqual(cpu.registers.a, 0b00001111)
-    I.Set(4, .a)(cpu)
+    I.set(4, .a)(cpu)
     XCTAssertEqual(cpu.registers.a, 0b00011111)
-    I.Set(5, .a)(cpu)
+    I.set(5, .a)(cpu)
     XCTAssertEqual(cpu.registers.a, 0b00111111)
-    I.Set(6, .a)(cpu)
+    I.set(6, .a)(cpu)
     XCTAssertEqual(cpu.registers.a, 0b01111111)
-    I.Set(7, .a)(cpu)
+    I.set(7, .a)(cpu)
     XCTAssertEqual(cpu.registers.a, 0b11111111)
+  }
+  
+  func testRes() {
+    cpu.registers.a = 0b11111111
+    I.res(0, .a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b11111110)
+    I.res(1, .a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b11111100)
+    I.res(2, .a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b11111000)
+    I.res(3, .a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b11110000)
+    I.res(4, .a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b11100000)
+    I.res(5, .a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b11000000)
+    I.res(6, .a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b10000000)
+    I.res(7, .a)(cpu)
+    XCTAssertEqual(cpu.registers.a, 0b0)
   }
 }
 

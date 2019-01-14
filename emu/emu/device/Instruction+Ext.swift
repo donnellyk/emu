@@ -1,23 +1,23 @@
 import Foundation
 
 extension I {
-  static func RLCA() -> Operation {
-    return RLC(.a)
+  static func rlca() -> Operation {
+    return rlc(.a)
   }
   
-  static func RLA() -> Operation {
-    return RL(.a)
+  static func rla() -> Operation {
+    return rl(.a)
   }
   
-  static func RRCA() -> Operation {
-    return RRC(.a)
+  static func rrca() -> Operation {
+    return rrc(.a)
   }
   
-  static func RRA() -> Operation {
-    return RR(.a)
+  static func rra() -> Operation {
+    return rr(.a)
   }
   
-  static func RLC(_ register: Register) -> Operation {
+  static func rlc(_ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let msb = value >> 7
@@ -33,7 +33,7 @@ extension I {
     }
   }
   
-  static func RL(_ register: Register) -> Operation {
+  static func rl(_ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let msb = value >> 7
@@ -49,7 +49,7 @@ extension I {
     }
   }
   
-  static func RRC(_ register: Register) -> Operation {
+  static func rrc(_ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let lsb = value & 0b1
@@ -65,7 +65,7 @@ extension I {
     }
   }
   
-  static func RR(_ register: Register) -> Operation {
+  static func rr(_ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let lsb = value & 0b1
@@ -81,7 +81,7 @@ extension I {
     }
   }
   
-  static func SLA(_ register: Register) -> Operation {
+  static func sla(_ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let msb = value >> 7
@@ -97,7 +97,7 @@ extension I {
     }
   }
   
-  static func SRA(_ register: Register) -> Operation {
+  static func sra(_ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let lsb = value & 0b1
@@ -114,7 +114,7 @@ extension I {
     }
   }
   
-  static func SRL(_ register: Register) -> Operation {
+  static func srl(_ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let lsb = value & 0b1
@@ -130,7 +130,7 @@ extension I {
     }
   }
   
-  static func Bit(_ number: UInt8, _ register: Register) -> Operation {
+  static func bit(_ number: UInt8, _ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let bit = (value >> number) & UInt8(0b1)
@@ -141,12 +141,21 @@ extension I {
     }
   }
   
-  static func Set(_ number: UInt8, _ register: Register) -> Operation {
+  static func set(_ number: UInt8, _ register: Register) -> Operation {
     return {
       let value = register.get8($0)
       let bit = UInt8(0b1) << number
       
       register.set(value | bit, in: $0)
+    }
+  }
+  
+  static func res(_ number: UInt8, _ register: Register) -> Operation {
+    return {
+      let value = register.get8($0)
+      let bit = ~(UInt8(0b1) << number)
+      
+      register.set(value & bit, in: $0)
     }
   }
 }

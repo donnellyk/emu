@@ -455,7 +455,7 @@ struct I {
     }
   }
   
-  static func DAA() -> Operation {
+  static func daa() -> Operation {
     return {
       var value = $0.registers.a
       let correction: UInt8 = 0
@@ -479,7 +479,7 @@ struct I {
     }
   }
   
-  static func CPL() -> Operation {
+  static func cpl() -> Operation {
     return {
       $0.registers.a = ~$0.registers.a
       
@@ -488,7 +488,7 @@ struct I {
     }
   }
   
-  static func CCF() -> Operation {
+  static func ccf() -> Operation {
     return {
       $0.registers.flags.c = !$0.registers.flags.c
       
@@ -497,7 +497,7 @@ struct I {
     }
   }
   
-  static func SCF() -> Operation {
+  static func scf() -> Operation {
     return {
       $0.registers.flags.c = true
       
