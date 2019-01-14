@@ -505,6 +505,111 @@ struct I {
       $0.registers.flags.h = false
     }
   }
+  
+  // MARK: - Jumps
+  static func jump_nn() -> Operation {
+    return jump{ _ in true }
+  }
+  
+  static func jump( _ condition: @escaping (CPU) -> Bool) -> Operation {
+    return {
+      guard condition($0) else {
+        return
+      }
+      
+      $0.registers.pc = $0.nextWord()
+    }
+  }
+  
+  static func jp_hl() -> Operation {
+    return {
+      $0.registers.pc = $0.registers.hl
+    }
+  }
+  
+  static func jr() -> Operation {
+    return jr{ _ in true }
+  }
+  
+  static func jr(_ condition: @escaping (CPU) -> Bool) -> Operation {
+    return {
+      guard condition($0) else {
+        return
+      }
+      
+      let a = $0.registers.pc
+      let n = Int8(bitPattern: $0.nextByte())
+      
+      $0.registers.pc = UInt16(truncatingIfNeeded: Int(a) + Int(n))
+    }
+  }
+  
+  // MARK: Calls
+  static func call_nn() -> Operation {
+    return call{ _ in true }
+  }
+  
+  static func call(_ condition: @escaping (CPU) -> Bool) -> Operation {
+    return {
+      guard condition($0) else {
+        return
+      }
+      
+      $0.push($0.registers.pc)
+      
+      jump_nn()($0)
+    }
+  }
+  
+  // MARK: Restart
+  static func restart(_ value: UInt16) -> Operation {
+    return {
+      $0.push($0.registers.pc)
+      $0.registers.pc = value
+    }
+  }
+  
+  // MARK: RETURN
+  static func ret() -> Operation {
+    return ret{ _ in true }
+  }
+  
+  static func reti() -> Operation {
+    return {
+      ret{ _ in true }($0)
+      
+      // TODO: Enable interupts
+    }
+  }
+  
+  static func ret(_ condition: @escaping (CPU) -> Bool) -> Operation {
+    return {
+      guard condition($0) else {
+        return
+      }
+      
+      $0.registers.pc = $0.pop()
+    }
+  }
+}
+
+// MARK: Reused Flag checks
+extension I {
+  func notZ(_ cpu: CPU) -> Bool {
+    return !zSet(cpu)
+  }
+  
+  func zSet(_ cpu: CPU) -> Bool {
+    return cpu.registers.flags.z
+  }
+  
+  func notC(_ cpu: CPU) -> Bool {
+    return !cSet(cpu)
+  }
+  
+  func cSet(_ cpu: CPU) -> Bool {
+    return cpu.registers.flags.c
+  }
 }
 
 private func checkForHalfCarry(_ a: UInt16, _ b:UInt16) -> Bool {
