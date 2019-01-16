@@ -375,28 +375,28 @@ struct I {
   static func ld_a_hl_dec() -> Operation {
     return {
       ld_r_r(.a, .hl)($0)
-      dec(.hl)($0)
+      dec(.hl, true)($0)
     }
   }
   
   static func ld_hl_a_dec() -> Operation {
     return {
       ld_r_r(.hl, .a)($0)
-      dec(.hl)($0)
+      dec(.hl, true)($0)
     }
   }
   
   static func ld_a_hl_inc() -> Operation {
     return {
       ld_r_r(.a, .hl)($0)
-      inc(.hl)($0)
+      inc(.hl, true)($0)
     }
   }
   
   static func ld_hl_a_inc() -> Operation {
     return {
       ld_r_r(.hl, .a)($0)
-      inc(.hl)($0)
+      inc(.hl, true)($0)
     }
   }
   
@@ -472,23 +472,36 @@ struct I {
   
   // MARK: - 8-BIT ALU
   
-  static func dec(_ register: Register) -> Operation {
+  /// Decrements register
+  ///
+  /// - Parameters:
+  ///   - register: Register to decrement
+  ///   - resolve: If true, 16-bit registers are treated as addresses and the value is read/written from memory
+  /// - Returns: Operation executing the decrement
+  static func dec(_ register: Register, _ resolve: Bool = false) -> Operation {
     return {
-      if register.is8Bit {
-        let c = $0.registers.flags.c
-        
+      let c = $0.registers.flags.c
+      let cpu = $0
+      defer {
+        cpu.registers.flags.c = c
+      }
+      
+      if register.is8Bit || resolve {
         let value = register.get8($0)
         subValue(in: register, a: value, b: 1)($0)
-        
-        $0.registers.flags.c = c
       } else {
-        let value = register.get16($0)
-        register.set(value-1, in: $0)
+        register.set(register.get16($0)-1, in: $0)
       }
     }
   }
   
-  static func inc(_ register: Register) -> Operation {
+  /// Increments register
+  ///
+  /// - Parameters:
+  ///   - register: Register to increment
+  ///   - resolve: If true, 16-bit registers are treated as addresses and the value is read/written from memory
+  /// - Returns: Operate to execute the increment
+  static func inc(_ register: Register, _ resolve: Bool = false) -> Operation {
     return {
       if register.is8Bit {
         let c = $0.registers.flags.c
@@ -506,12 +519,7 @@ struct I {
   
   static func add_a(_ register: Register) -> Operation {
     return {
-      let value: UInt8
-      if register == .hl {
-        value = $0.mmu.read(register.get16($0))
-      } else {
-        value = register.get8($0)
-      }
+      let value = register.get8($0)
       
       addValue(in: .a, a: $0.registers.a, b: value)($0)
     }
@@ -559,6 +567,14 @@ struct I {
       $0.registers.flags.c = checkForBorrow(a, b)
       
       register.set(val, in: $0)
+    }
+  }
+  
+  static func sub_a(_ register: Register) -> Operation {
+    return {
+      let value = register.get8($0)
+      
+      subValue(in: .a, a: $0.registers.a, b: value)($0)
     }
   }
   
@@ -735,7 +751,6 @@ struct I {
   static func daa() -> Operation {
     return {
       var value = $0.registers.a
-      let correction: UInt8 = 0
       
       if $0.registers.flags.n { // subtraction
         if $0.registers.flags.c { value = value &- 0x60 }
@@ -869,22 +884,31 @@ struct I {
   }
 }
 
-// MARK: Reused Flag checks
-extension I {
-  func notZ(_ cpu: CPU) -> Bool {
-    return !zSet(cpu)
+// MARK: - Reused Flag conditionals
+// (hence the C)
+struct C {
+  static var notZ: (CPU) -> Bool {
+    return {
+      return !self.zSet($0)
+    }
   }
   
-  func zSet(_ cpu: CPU) -> Bool {
-    return cpu.registers.flags.z
+  static var zSet: (CPU) -> Bool {
+    return {
+      return $0.registers.flags.z
+    }
   }
   
-  func notC(_ cpu: CPU) -> Bool {
-    return !cSet(cpu)
+  static var notC: (CPU) -> Bool {
+    return {
+      return !self.cSet($0)
+    }
   }
   
-  func cSet(_ cpu: CPU) -> Bool {
-    return cpu.registers.flags.c
+  static var cSet: (CPU) -> Bool {
+    return {
+      return $0.registers.flags.c
+    }
   }
 }
 

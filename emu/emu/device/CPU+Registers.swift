@@ -2,11 +2,11 @@ import Foundation
 
 enum Register {
   case a, b, c, d, e, h, l
-  case bc, de, hl
+  case bc, de, hl, sp
   
   var is16Bit: Bool {
     switch self {
-    case .bc, .de, .hl:
+    case .bc, .de, .hl, .sp:
       return true
     default:
       return false
@@ -15,7 +15,7 @@ enum Register {
   
   var is8Bit: Bool {
     switch self {
-    case .bc, .de, .hl:
+    case .bc, .de, .hl, .sp:
       return false
     default:
       return true
@@ -38,6 +38,8 @@ enum Register {
       cpu.registers.h = value
     case .l:
       cpu.registers.l = value
+    case .hl:
+      cpu.mmu.write(value, at: get16(cpu))
     default:
       fatalError("Can not write UInt8 to non 8-bit register")
     }
@@ -51,6 +53,8 @@ enum Register {
       cpu.registers.de = value
     case .hl:
       cpu.registers.hl = value
+    case .sp:
+      cpu.registers.sp = vale
     default:
       fatalError("Can not write UInt16 to 8-bit register")
     }
@@ -87,6 +91,8 @@ enum Register {
       return cpu.registers.de
     case .hl:
       return cpu.registers.hl
+    case .sp:
+      return cpu.registers.sp
     default:
       return UInt16(get8(cpu))
     }
