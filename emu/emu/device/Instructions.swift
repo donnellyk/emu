@@ -860,7 +860,8 @@ struct I {
   
   static func prefix() -> Operation {
     return {
-      _ = $0
+      let instruction = I.extInstructions[Int($0.nextByte())]
+      $0.execute(instruction)
     }
   }
 }

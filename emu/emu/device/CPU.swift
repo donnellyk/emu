@@ -11,6 +11,16 @@ public class CPU {
   }
   
   
+  
+  
+  /// Executres an instruction and incremented the cycle count
+  ///
+  /// - Parameter instruction: Instruction to be executed
+  func execute(_ instruction: Instruction) {
+    instruction.operation(self)
+    // TODO: Something with the instruction.cycles(self)
+  }
+  
   /// Reads 8-bit value from program counter address and increments counter
   ///
   /// - Returns: Value from memory
