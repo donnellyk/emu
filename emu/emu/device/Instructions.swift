@@ -239,72 +239,76 @@ struct I {
     Instruction(opcode: 0xBF, operation: cp_a(.a)),
     
     // 0xCn
-    Instruction(opcode: 0xC1, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xC2, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xC3, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xC4, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xC5, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xC6, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xC7, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xC8, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xC9, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xCA, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xCB, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xCC, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xCD, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xCE, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xCF, operation: { _ in }, cycles: 0),
+    Instruction(opcode: 0xC0, operation: ret(C.notZ), cycles: { C.notZ($0) ? 20 : 8 }),
+    Instruction(opcode: 0xC1, operation: pop(.bc), cycles: 12),
+    Instruction(opcode: 0xC2, operation: jump(C.notZ), cycles: { C.notZ($0) ? 16 : 12 }),
+    Instruction(opcode: 0xC3, operation: jump_nn(), cycles: 16),
+    Instruction(opcode: 0xC4, operation: call(C.notZ), cycles: { C.notZ($0) ? 24 : 12 }),
+    Instruction(opcode: 0xC5, operation: push(.bc), cycles: 16),
+    Instruction(opcode: 0xC6, operation: add_a(), cycles: 8),
+    Instruction(opcode: 0xC7, operation: restart(0), cycles: 16),
+    Instruction(opcode: 0xC8, operation: ret(C.zSet), cycles: { C.zSet($0) ? 20 : 8 }),
+    Instruction(opcode: 0xC9, operation: ret(), cycles: 16),
+    Instruction(opcode: 0xCA, operation: jump(C.zSet), cycles: { C.zSet($0) ? 16 : 12 }),
+    Instruction(opcode: 0xCB, operation: prefix(), cycles: 4),
+    Instruction(opcode: 0xCC, operation: call(C.zSet), cycles: { C.zSet($0) ? 24 : 12 }),
+    Instruction(opcode: 0xCD, operation: call_nn(), cycles: 24),
+    Instruction(opcode: 0xCE, operation: adc_a_n(), cycles: 8),
+    Instruction(opcode: 0xCF, operation: restart(8), cycles: 16),
     
     // 0xDn
-    Instruction(opcode: 0xD1, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xD2, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xD3, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xD4, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xD5, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xD6, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xD7, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xD8, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xD9, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xDA, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xDB, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xDC, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xDD, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xDE, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xDF, operation: { _ in }, cycles: 0),
+    Instruction(opcode: 0xD0, operation: ret(C.notC), cycles: { C.notC($0) ? 20 : 8 }),
+    Instruction(opcode: 0xD1, operation: pop(.de), cycles: 12),
+    Instruction(opcode: 0xD2, operation: jump(C.notC), cycles: { C.notC($0) ? 16 : 12 }),
+    Instruction(opcode: 0xD3, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xD4, operation: call(C.notC), cycles: { C.notC($0) ? 24 : 12 }),
+    Instruction(opcode: 0xD5, operation: push(.de), cycles: 16),
+    Instruction(opcode: 0xD6, operation: sub_a(), cycles: 8),
+    Instruction(opcode: 0xD7, operation: restart(10), cycles: 16),
+    Instruction(opcode: 0xD8, operation: ret(C.cSet), cycles: { C.cSet($0) ? 20 : 8 }),
+    Instruction(opcode: 0xD9, operation: reti(), cycles: 16),
+    Instruction(opcode: 0xDA, operation: jump(C.cSet), cycles: { C.cSet($0) ? 16 : 12 }),
+    Instruction(opcode: 0xDB, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xDC, operation: call(C.cSet), cycles: { C.cSet($0) ? 24 : 12 }),
+    Instruction(opcode: 0xDD, operation: { _ in assertionFailure() }, cycles: 0),
+    Instruction(opcode: 0xDE, operation: sbc_a(), cycles: 8),
+    Instruction(opcode: 0xDF, operation: restart(18), cycles: 16),
     
     // 0xEn
-    Instruction(opcode: 0xE1, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xE2, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xE3, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xE4, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xE5, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xE6, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xE7, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xE8, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xE9, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xEA, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xEB, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xEC, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xED, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xEE, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xEF, operation: { _ in }, cycles: 0),
+    Instruction(opcode: 0xE0, operation: ldh_n_a(), cycles: 12),
+    Instruction(opcode: 0xE1, operation: pop(.hl), cycles: 12),
+    Instruction(opcode: 0xE2, operation: ld_c_a(), cycles: 8),
+    Instruction(opcode: 0xE3, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xE4, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xE5, operation: push(.hl), cycles: 16),
+    Instruction(opcode: 0xE6, operation: and_a(), cycles: 8),
+    Instruction(opcode: 0xE7, operation: restart(20), cycles: 16),
+    Instruction(opcode: 0xE8, operation: add_sp(), cycles: 16),
+    Instruction(opcode: 0xE9, operation: jp_hl(), cycles: 4),
+    Instruction(opcode: 0xEA, operation: ldh_a_n(), cycles: 16),
+    Instruction(opcode: 0xEB, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xEC, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xED, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xEE, operation: xor_a(), cycles: 8),
+    Instruction(opcode: 0xEF, operation: restart(28), cycles: 16),
     
     // 0xFn
-    Instruction(opcode: 0xF1, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xF2, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xF3, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xF4, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xF5, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xF6, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xF7, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xF8, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xF9, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xFA, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xFB, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xFC, operation: { _ in }, cycles: 0),
-//    Instruction(opcode: 0xFD, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xFE, operation: { _ in }, cycles: 0),
-    Instruction(opcode: 0xFF, operation: { _ in }, cycles: 0),
+    Instruction(opcode: 0xF0, operation: ldh_a_n(), cycles: 12),
+    Instruction(opcode: 0xF1, operation: pop(.af), cycles: 12),
+    Instruction(opcode: 0xF2, operation: ld_a_c(), cycles: 8),
+    Instruction(opcode: 0xF3, operation: { _ in /* TODO: DI */ }),
+    Instruction(opcode: 0xF4, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xF5, operation: push(.af), cycles: 12),
+    Instruction(opcode: 0xF6, operation: or_a(), cycles: 8),
+    Instruction(opcode: 0xF7, operation: restart(30), cycles: 16),
+    Instruction(opcode: 0xF8, operation: ldd_hl_sp_n(), cycles: 12),
+    Instruction(opcode: 0xF9, operation: ldd_sp_hl(), cycles: 8),
+    Instruction(opcode: 0xFA, operation: ldh_a_n(), cycles: 16),
+    Instruction(opcode: 0xFB, operation: { _ in /* TODO: EI */ }),
+    Instruction(opcode: 0xFC, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xFD, operation: { _ in assertionFailure() }),
+    Instruction(opcode: 0xFE, operation: cp_a(), cycles: 8),
+    Instruction(opcode: 0xFF, operation: restart(38), cycles: 16),
   ]
   
   // MARK: - 8-Bit LOAD
@@ -526,9 +530,9 @@ struct I {
     }
   }
   
-  static func add_a(_ register: Register) -> Operation {
+  static func add_a(_ register: Register? = nil) -> Operation {
     return {
-      let value = register.get8($0)
+      let value = register?.get8($0) ?? $0.nextByte()
       
       addValue(in: .a, a: $0.registers.a, b: value)($0)
     }
@@ -579,34 +583,18 @@ struct I {
     }
   }
   
-  static func sub_a(_ register: Register) -> Operation {
+  static func sub_a(_ register: Register? = nil) -> Operation {
     return {
-      let value = register.get8($0)
+      let value = register?.get8($0) ?? $0.nextByte()
       
       subValue(in: .a, a: $0.registers.a, b: value)($0)
     }
   }
   
-  static func sbc_a(_ register: Register) -> Operation {
+  static func sbc_a(_ register: Register? = nil) -> Operation {
     return {
       let carry = $0.registers.flags.c.bit
-      
-      let value: UInt8
-      if register == .hl {
-        value = $0.mmu.read(register.get16($0))
-      } else {
-        value = register.get8($0)
-      }
-      
-      subValue(in: .a, a: $0.registers.a, b: value)($0)
-      subValue(in: .a, a: $0.registers.a, b: carry)($0)
-    }
-  }
-  
-  static func sbc_a_n() -> Operation {
-    return {
-      let carry = $0.registers.flags.c.bit
-      let value = $0.nextByte()
+      let value = register?.get8($0) ?? $0.nextByte()
       
       subValue(in: .a, a: $0.registers.a, b: value)($0)
       subValue(in: .a, a: $0.registers.a, b: carry)($0)
@@ -615,15 +603,9 @@ struct I {
 
 // MARK: - LOGICAL OPERATIONS
   
-  static func and_a_n() -> Operation {
+  static func and_a(_ register: Register? = nil) -> Operation {
     return {
-      and_a($0.nextByte())($0)
-    }
-  }
-  
-  static func and_a(_ register: Register) -> Operation {
-    return {
-      and_a(register.get8($0))($0)
+      and_a(register?.get8($0) ?? $0.nextByte())($0)
     }
   }
   
@@ -632,31 +614,20 @@ struct I {
 
   }
   
-  static func or_a_n() -> Operation {
+  static func or_a(_ register: Register? = nil) -> Operation {
     return {
-      or_a($0.nextByte())($0)
-    }
-  }
-  
-  static func or_a(_ register: Register) -> Operation {
-    return {
-      or_a(register.get8($0))($0)
+      or_a(register?.get8($0) ?? $0.nextByte())($0)
     }
   }
   
   static func or_a(_ value: UInt8) -> Operation {
     return performLogicalOperationOnA(|, value: value)
   }
+
   
-  static func xor_a_n() -> Operation {
+  static func xor_a(_ register: Register? = nil) -> Operation {
     return {
-      xor_a($0.nextByte())($0)
-    }
-  }
-  
-  static func xor_a(_ register: Register) -> Operation {
-    return {
-      xor_a(register.get8($0))($0)
+      xor_a(register?.get8($0) ?? $0.nextByte())($0)
     }
   }
   
@@ -684,15 +655,9 @@ struct I {
   
 // MARK: - COMPARE
   
-  static func cp_a(_ register: Register) -> Operation {
+  static func cp_a(_ register: Register? = nil) -> Operation {
     return {
-      cp_a(register.get8($0))($0)
-    }
-  }
-  
-  static func cp_a_n() -> Operation {
-    return {
-      cp_a($0.nextByte())($0)
+      cp_a(register?.get8($0) ?? $0.nextByte())($0)
     }
   }
   
@@ -889,6 +854,13 @@ struct I {
       }
       
       $0.registers.pc = $0.pop()
+    }
+  }
+  
+  
+  static func prefix() -> Operation {
+    return {
+      _ = $0
     }
   }
 }
