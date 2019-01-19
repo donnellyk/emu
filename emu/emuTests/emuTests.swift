@@ -272,7 +272,7 @@ class emuTests: XCTestCase {
     
     XCTAssertEqual(cpu.registers.a, 4)
     
-    I.sbc_a_n()(cpu)
+    I.sbc_a()(cpu)
     
     XCTAssertEqual(cpu.registers.a, 1)
   }
