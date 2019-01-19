@@ -2,11 +2,11 @@ import Foundation
 
 enum Register {
   case a, b, c, d, e, h, l
-  case bc, de, hl, sp
+  case bc, de, hl, sp, af
   
   var is16Bit: Bool {
     switch self {
-    case .bc, .de, .hl, .sp:
+    case .bc, .de, .hl, .sp, .af:
       return true
     default:
       return false
@@ -15,7 +15,7 @@ enum Register {
   
   var is8Bit: Bool {
     switch self {
-    case .bc, .de, .hl, .sp:
+    case .bc, .de, .hl, .sp, .af:
       return false
     default:
       return true
@@ -54,7 +54,9 @@ enum Register {
     case .hl:
       cpu.registers.hl = value
     case .sp:
-      cpu.registers.sp = vale
+      cpu.registers.sp = value
+    case .af:
+      cpu.registers.af = value
     default:
       fatalError("Can not write UInt16 to 8-bit register")
     }
@@ -93,6 +95,8 @@ enum Register {
       return cpu.registers.hl
     case .sp:
       return cpu.registers.sp
+    case .af:
+      return cpu.registers.af
     default:
       return UInt16(get8(cpu))
     }
@@ -115,10 +119,18 @@ public extension CPU {
     var c: Bool = false
     
     var byteValue: UInt8 {
-      return z.bit << 7 |
-        n.bit << 6 |
-        h.bit << 5 |
-        c.bit << 4
+      get {
+        return z.bit << 7 |
+          n.bit << 6 |
+          h.bit << 5 |
+          c.bit << 4
+      }
+      set {
+        z.bit = newValue >> 7
+        n.bit = newValue >> 6
+        h.bit = newValue >> 5
+        c.bit = newValue >> 4
+      }
     }
     
     func set(z: Bool, n: Bool, h: Bool, c: Bool) {
@@ -144,7 +156,12 @@ public extension CPU {
     var sp:UInt16 = 0
     
     var af:UInt16 {
-      return join(a, flags.byteValue)
+      get {
+        return join(a, flags.byteValue)
+      }
+      set {
+        (a, flags.byteValue) = split(newValue)
+      }
     }
     
     var bc: UInt16 {
