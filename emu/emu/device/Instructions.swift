@@ -384,28 +384,28 @@ struct I {
   static func ld_a_hl_dec() -> Operation {
     return {
       ld_r_r(.a, .hl)($0)
-      dec(.hl, true)($0)
+      dec(.hl)($0)
     }
   }
   
   static func ld_hl_a_dec() -> Operation {
     return {
       ld_r_r(.hl, .a)($0)
-      dec(.hl, true)($0)
+      dec(.hl)($0)
     }
   }
   
   static func ld_a_hl_inc() -> Operation {
     return {
       ld_r_r(.a, .hl)($0)
-      inc(.hl, true)($0)
+      inc(.hl)($0)
     }
   }
   
   static func ld_hl_a_inc() -> Operation {
     return {
       ld_r_r(.hl, .a)($0)
-      inc(.hl, true)($0)
+      inc(.hl)($0)
     }
   }
   
