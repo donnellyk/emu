@@ -192,24 +192,12 @@ public extension CPU {
     }
     
     private func split(_ value:UInt16) -> (high: UInt8, low: UInt8) {
-      return (UInt8(value >> 8), UInt8(value & 0xff))
+      return value.split()
     }
     
     private func join(_ high: UInt8, _ low: UInt8) -> UInt16 {
-      return (UInt16(high) << 8) | UInt16(low)
+      return UInt16(high: high, low: low)
     }
     
   }
 }
-
-extension Bool {
-  var bit: UInt8 {
-    get {
-      return self ? 1 : 0
-    }
-    set {
-      self = (newValue == 1)
-    }
-  }
-}
-
