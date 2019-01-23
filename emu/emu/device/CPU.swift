@@ -3,15 +3,20 @@ import Foundation
 public class CPU {
   var masterInteruptFlag: Bool = false
   
-  let mmu: MMU
-  let registers = Registers()
+  var mmu: MMU
+  var registers = Registers()
   
   init(mmu:MMU) {
     self.mmu = mmu
   }
   
+  func boot() {
+    registers = Registers()
+  }
   
-  
+  func run() {
+    execute(I.table[nextByte()])
+  }
   
   /// Executres an instruction and incremented the cycle count
   ///
