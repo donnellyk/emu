@@ -423,7 +423,7 @@ extension I {
   static func bit(_ number: UInt8, _ register: Register) -> Operation {
     return {
       let value = register.get8($0)
-      let bit = (value >> number) & UInt8(0b1)
+      let bit = value.test(number).bit
       
       $0.registers.flags.z = bit == 0
       $0.registers.flags.n = false

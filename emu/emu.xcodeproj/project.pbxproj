@@ -10,6 +10,7 @@
 		0A3EE0A221F80C66000C26A2 /* Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A121F80C66000C26A2 /* Conveniences.swift */; };
 		0A3EE0A421F81B69000C26A2 /* bios.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A321F81B69000C26A2 /* bios.bin */; };
 		0A3EE0A621F81C1E000C26A2 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A521F81C1E000C26A2 /* Device.swift */; };
+		0A3EE0A821F8B68C000C26A2 /* PPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A721F8B68C000C26A2 /* PPU.swift */; };
 		0A4A446921E4F48A00C7E8CB /* Instruction+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */; };
 		0A5B816A21F3EC5800C531A5 /* Cartridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5B816921F3EC5800C531A5 /* Cartridge.swift */; };
 		0AC6A44221D83AA000E3FA19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A44121D83AA000E3FA19 /* AppDelegate.swift */; };
@@ -21,6 +22,8 @@
 		0AC6A46521D83ACA00E3FA19 /* MMU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A46121D83ACA00E3FA19 /* MMU.swift */; };
 		0AC6A46621D83ACA00E3FA19 /* CPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A46221D83ACA00E3FA19 /* CPU.swift */; };
 		0AC6A46721D83ACA00E3FA19 /* CPU+Registers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A46321D83ACA00E3FA19 /* CPU+Registers.swift */; };
+		0ADAD0F321FE303E000147CB /* MMU+Registers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADAD0F221FE303E000147CB /* MMU+Registers.swift */; };
+		0ADAD0F521FE3A1F000147CB /* PPU+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADAD0F421FE3A1F000147CB /* PPU+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,6 +40,7 @@
 		0A3EE0A121F80C66000C26A2 /* Conveniences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conveniences.swift; sourceTree = "<group>"; };
 		0A3EE0A321F81B69000C26A2 /* bios.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = bios.bin; sourceTree = "<group>"; };
 		0A3EE0A521F81C1E000C26A2 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
+		0A3EE0A721F8B68C000C26A2 /* PPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPU.swift; sourceTree = "<group>"; };
 		0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+Ext.swift"; sourceTree = "<group>"; };
 		0A5B816921F3EC5800C531A5 /* Cartridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cartridge.swift; sourceTree = "<group>"; };
 		0AC6A43E21D83AA000E3FA19 /* emu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emu.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +57,8 @@
 		0AC6A46121D83ACA00E3FA19 /* MMU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMU.swift; sourceTree = "<group>"; };
 		0AC6A46221D83ACA00E3FA19 /* CPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPU.swift; sourceTree = "<group>"; };
 		0AC6A46321D83ACA00E3FA19 /* CPU+Registers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CPU+Registers.swift"; sourceTree = "<group>"; };
+		0ADAD0F221FE303E000147CB /* MMU+Registers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MMU+Registers.swift"; sourceTree = "<group>"; };
+		0ADAD0F421FE3A1F000147CB /* PPU+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PPU+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -132,8 +138,11 @@
 				0AC6A46021D83ACA00E3FA19 /* Instructions.swift */,
 				0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */,
 				0AC6A46121D83ACA00E3FA19 /* MMU.swift */,
+				0ADAD0F221FE303E000147CB /* MMU+Registers.swift */,
 				0A5B816921F3EC5800C531A5 /* Cartridge.swift */,
 				0A3EE0A521F81C1E000C26A2 /* Device.swift */,
+				0A3EE0A721F8B68C000C26A2 /* PPU.swift */,
+				0ADAD0F421FE3A1F000147CB /* PPU+Extension.swift */,
 			);
 			path = device;
 			sourceTree = "<group>";
@@ -242,10 +251,13 @@
 				0AC6A44421D83AA000E3FA19 /* ViewController.swift in Sources */,
 				0AC6A46421D83ACA00E3FA19 /* Instructions.swift in Sources */,
 				0AC6A46621D83ACA00E3FA19 /* CPU.swift in Sources */,
+				0ADAD0F521FE3A1F000147CB /* PPU+Extension.swift in Sources */,
 				0AC6A44221D83AA000E3FA19 /* AppDelegate.swift in Sources */,
+				0ADAD0F321FE303E000147CB /* MMU+Registers.swift in Sources */,
 				0AC6A46521D83ACA00E3FA19 /* MMU.swift in Sources */,
 				0A4A446921E4F48A00C7E8CB /* Instruction+Ext.swift in Sources */,
 				0AC6A46721D83ACA00E3FA19 /* CPU+Registers.swift in Sources */,
+				0A3EE0A821F8B68C000C26A2 /* PPU.swift in Sources */,
 				0A5B816A21F3EC5800C531A5 /* Cartridge.swift in Sources */,
 				0A3EE0A221F80C66000C26A2 /* Conveniences.swift in Sources */,
 				0A3EE0A621F81C1E000C26A2 /* Device.swift in Sources */,

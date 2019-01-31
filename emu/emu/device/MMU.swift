@@ -18,8 +18,25 @@ import Foundation
 //$0000-$00FF  Restart and Interrupt Vectors
 
 public class MMU {
-  class Registers {
-    static let bios: UInt16 = 0xFF50
+  public enum RegisterAddress: UInt16 {
+    case lcdc = 0xFF40
+    case stat = 0xFF41
+    case scy = 0xFF42
+    case scx = 0xFF43
+    case ly = 0xFF44
+    case lyc = 0xFF45
+    
+    case bios = 0xFF50
+    
+    case bcps = 0xFF68
+    case bcpd = 0xFF69
+    case ocps = 0xFF6A
+    case ocpd = 0xFF6B
+    
+    case wy = 0xFF4A
+    case wx = 0xFF4B
+    
+    case oam = 0xFE00
   }
   
   var cartridge: Cartridge?
@@ -27,11 +44,23 @@ public class MMU {
   private var bios: Bios = Bios()
   private var memory: [UInt8] = []
   private var inBios: Bool {
-    return (read(Registers.bios) as UInt8) == 1
+    return read(.bios) == 1
   }
   
   init(cart: Cartridge? = nil) {
     self.cartridge = cart
+  }
+  
+  public func read(_ register: RegisterAddress) -> UInt8 {
+    return read(register.rawValue)
+  }
+  
+  public func write(_ value: Bool, at register: RegisterAddress) {
+    return write(value.bit, at: register)
+  }
+  
+  public func write(_ value: UInt8, at register: RegisterAddress) {
+    return write(value, at: register.rawValue)
   }
   
   public func read(_ address: UInt16) -> UInt8 {
@@ -72,7 +101,10 @@ public class MMU {
     case 0xFE00...0xFE9F: // OAM / Sprite
       break // TODO: Fiddle with things from the cart
     case 0xFF00...0xFFFE:
+      let old = memory[address]
       memory[address] = value
+
+      hardwareRegisterCheck(old: old, new: value, address: address)
       
     default:
       assertionFailure("Unaddressable memory at \(address.toHex)")
@@ -88,6 +120,30 @@ public class MMU {
     
     write(low, at: address)
     write(high, at: address+1)
+  }
+}
+
+extension MMU {
+  func hardwareRegisterCheck(old: UInt8, new: UInt8, address: UInt16) {
+    guard let register = RegisterAddress(rawValue: address) else {
+      return
+    }
+    
+    switch register {
+    case .lcdc:
+      if LCDC.checkStopFlag(old: old, new: new) {
+        write(0, at: .ly)
+      }
+      
+    case .lyc:
+      var value = read(.stat)
+      
+      value.set(2, value: (new == read(.ly)))
+      write(value, at: .stat)
+      
+    default:
+      break
+    }
   }
 }
 

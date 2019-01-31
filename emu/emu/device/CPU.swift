@@ -14,11 +14,11 @@ public class CPU {
     registers = Registers()
   }
   
-  func run() {
+  func step() {
     execute(I.table[nextByte()])
   }
   
-  /// Executres an instruction and incremented the cycle count
+  /// Executes an instruction and incremented the cycle count
   ///
   /// - Parameter instruction: Instruction to be executed
   func execute(_ instruction: Instruction) {

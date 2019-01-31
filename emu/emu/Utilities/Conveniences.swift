@@ -32,8 +32,28 @@ extension UInt16 {
   func split() -> (high: UInt8, low: UInt8) {
     return (UInt8(self >> 8), UInt8(self & 0xff))
   }
+}
+
+extension UInt8 {
+  func test(_ number: UInt8) -> Bool {
+    return (self >> number) & UInt8(0b1) == 1
+  }
   
+  mutating func set(_ number: UInt8, value: Bool) {
+    if value {
+      set(number)
+    } else {
+      res(number)
+    }
+  }
   
+  mutating func set(_ number: UInt8) {
+    self = self | (UInt8(0b1) << number)
+  }
+  
+  mutating func res(_ number: UInt8) {
+    self = self & ~(UInt8(0b1) << number)
+  }
 }
 
 extension Bool {
