@@ -1,6 +1,10 @@
 import Foundation
 
 public class PPU {
+  static let tileSize: UInt16 = 16
+  static let tileIDSize: UInt16 = 8
+  static let bgWidth: UInt16 = 32
+  
   weak var mmu: MMU!
 
   var modeClock: Int = 0
@@ -90,7 +94,7 @@ public extension PPU {
     // Render Background
     if mmu.lcdc.bgDisplayFlag {
       for i in 0..<20 {
-        drawLine(fetchTile(indexOffset: i))
+        drawLine(fetchTileLine(index: i))
       }
     }
     
@@ -105,27 +109,30 @@ public extension PPU {
     }
   }
   
-//  func fetchTile() {
-//
-//  }
-  
-  func fetchTile(indexOffset: Int) -> UInt16 {
-    let tileSize: UInt16 = 16
-    let x = UInt16(mmu.read(.scx)) / 8
-    let y = UInt16(line &+ mmu.read(.scy)) / 8
-    let lineTileOffset = UInt16(line &+ mmu.read(.scy)) % 8 * 2
-    
-    let bgData = mmu.lcdc.bgCodeArea
+  func fetchTileLine(index: Int) -> UInt16 {
     let bgChar = mmu.lcdc.bgCharArea
-    let idOffset = mmu.lcdc.bgTileIDOffset
     
-    let tileOffset = UInt16(indexOffset / 8)
-    let idAddress = bgData + (y * 32) + x + tileOffset
-    let tileID = UInt16(mmu.read(idAddress) as UInt8) &+ idOffset
+    // ((line + syc) % 8) = current "line" within a tile. * 2 to get address offset, since each pixel line is 2 bytes
+    let tileLineOffset = UInt16(line &+ mmu.read(.scy)) % 8 * 2
+    let id = UInt16(fetchTileID(index: UInt16(index)))
     
-    let tileAddress = bgChar + (tileID*tileSize) + lineTileOffset
+    let tileAddress = bgChar + (id * PPU.tileSize) + tileLineOffset
     
     return mmu.read(tileAddress)
+  }
+
+
+  /// Reads the tile id for the given line and index
+  ///
+  /// - Parameter index: index of tile in the current line. Ex: First tile is 0, last is 19
+  /// - Returns: The ID of the tile, to be read from `BGCHAR`
+  func fetchTileID(index: UInt16) -> UInt8 {
+    let x = UInt16(mmu.read(.scx)) / PPU.tileIDSize
+    let y = UInt16(line &+ mmu.read(.scy)) / PPU.tileIDSize
+    
+    let coord = (y * PPU.bgWidth) + x
+    let idAddress = mmu.lcdc.bgCodeArea + coord + UInt16(index)
+    return mmu.read(idAddress) &+ mmu.lcdc.bgTileIDOffset
   }
   
   func drawLine(_ line: UInt16) {
