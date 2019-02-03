@@ -85,10 +85,6 @@ extension MMU.LCDC {
     return bgCharAreaFlag ? 0x8800 : 0x8000
   }
   
-  var bgTileIDOffset: UInt8 {
-    return bgCharAreaFlag ? 128 : 0
-  }
-  
   var windowCodeArea: UInt16 {
     return windowCodeAreaFlag ? 0x9800 : 0x9C00
   }
