@@ -35,8 +35,26 @@ extension UInt16 {
 }
 
 extension UInt8 {
+  func get(bits: UInt8...) -> UInt8 {
+    return bits.reduce(0) { (r, e) in
+      return (r << 1) | bit(e)
+    }
+  }
+  
+  func bit(_ number: Int) -> UInt8 {
+    return bit(UInt8(clamping: number))
+  }
+  
+  func bit(_ number: UInt8) -> UInt8 {
+    return (self >> number) & UInt8(0b1)
+  }
+  
+  func test(_ number: Int) -> Bool {
+    return test(UInt8(clamping: number))
+  }
+  
   func test(_ number: UInt8) -> Bool {
-    return (self >> number) & UInt8(0b1) == 1
+    return bit(number) == 1
   }
   
   mutating func set(_ number: UInt8, value: Bool) {
