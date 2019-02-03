@@ -26,6 +26,10 @@ public class MMU {
     case ly = 0xFF44
     case lyc = 0xFF45
     
+    case bgPalette = 0xFF47
+    case objPalette0 = 0xFF48
+    case objPalette1 = 0xFF49
+    
     case bios = 0xFF50
     
     case bcps = 0xFF68

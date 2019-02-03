@@ -1,5 +1,6 @@
 import Foundation
 
+// MARK: COMPUTED VARS
 extension MMU {
   var lcdc: LCDC {
     return LCDC(read(.lcdc))
@@ -10,6 +11,7 @@ extension MMU {
   }
 }
 
+// MARK: DEFINITIONS
 extension MMU {
   struct LCDC {
     var value: UInt8
