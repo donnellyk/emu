@@ -139,7 +139,15 @@ public extension PPU {
       
       init(color: Palette.Color) {
         let value = color.value
-        data = Data()
+        
+        var data = Data()
+        data.append(contentsOf: [
+          value.r, // Red
+          value.g, // Green
+          value.b // Blue
+        ])
+        
+        self.data = data
       }
     }
     
@@ -149,7 +157,19 @@ public extension PPU {
     }
     
     func makeImage() -> CGImage? {
-      return nil
+      return CGImage(
+        width: 160,
+        height: 144,
+        bitsPerComponent: 8,
+        bitsPerPixel: 24,
+        bytesPerRow: 480,
+        space: CGColorSpace(name: CGColorSpace.genericRGBLinear)!,
+        bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue),
+        provider: CGDataProvider(data: data as CFData)!,
+        decode: nil,
+        shouldInterpolate: true,
+        intent: .defaultIntent
+      )!
     }
   }
 }
