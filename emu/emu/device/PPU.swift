@@ -1,6 +1,12 @@
 import Foundation
 
+protocol PPUDelegate : class {
+  func ppu(_ ppu: PPU, didDraw bitmap: PPU.BitMap)
+}
+
 public class PPU {
+  weak var delegate: PPUDelegate?
+  
   static let tileSize: UInt16 = 16
   static let tileIDSize: UInt16 = 8
   static let bgWidth: UInt16 = 32
@@ -166,7 +172,7 @@ public extension PPU {
   }
   
   func pushToScreen() {
-    // Might not be necessary, depending on the screen implementation
+    delegate?.ppu(self, didDraw: bitmap)
     bitmap = BitMap() //Reset bitmap
   }
 }
