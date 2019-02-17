@@ -40,6 +40,7 @@ public class MMU {
     case wy = 0xFF4A
     case wx = 0xFF4B
     
+    case dmaTransfer = 0xFF46
     case oam = 0xFE00
   }
   
@@ -82,7 +83,7 @@ public class MMU {
     case 0xE000...0xFDFF: // Echo RAM
       return memory[address-0x2000]
     case 0xFE00...0xFE9F: // OAM / Sprite
-      return 0  // TODO: Fiddle with things from the cart
+      return memory[address]
     case 0xFF00...0xFFFE:
       return memory[address]
       
@@ -103,7 +104,7 @@ public class MMU {
     case 0xE000...0xFDFF: // Echo RAM
       memory[address-0x2000] = value
     case 0xFE00...0xFE9F: // OAM / Sprite
-      break // TODO: Fiddle with things from the cart
+      memory[address] = value
     case 0xFF00...0xFFFE:
       let old = memory[address]
       memory[address] = value
@@ -145,8 +146,21 @@ extension MMU {
       value.set(2, value: (new == read(.ly)))
       write(value, at: .stat)
       
+    case .dmaTransfer:
+      startDMATransfer(new)
+      
     default:
       break
+    }
+  }
+  
+  func startDMATransfer(_ value: UInt8) {
+    let address = UInt16(exactly: value)! << 8
+    
+    let range: Range<UInt16> = (0..<160)
+    range.forEach { i in
+      let value: UInt8 = read(address + i)
+      write(value, at: RegisterAddress.oam.rawValue + i)
     }
   }
 }
