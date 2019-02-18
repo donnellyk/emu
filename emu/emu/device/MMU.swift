@@ -54,6 +54,9 @@ public class MMU {
   
   init(cart: Cartridge? = nil) {
     self.cartridge = cart
+    (0..<0xFFFE).forEach { _ in
+      memory.append(0)
+    }
   }
   
   public func read(_ register: RegisterAddress) -> UInt8 {
