@@ -35,6 +35,10 @@ public extension PPU {
     func checkTimer(_ clock: Int) -> Bool {
       return clock >= timing
     }
+    
+    func resetClock(_ clock: Int) -> Int {
+      return clock % timing
+    }
   }
   
   public enum ObjBlockMode {

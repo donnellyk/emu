@@ -52,16 +52,18 @@ public extension PPU {
     modeClock += cycles
     let expired = mode.checkTimer(modeClock)
     
+    if expired {
+      modeClock = mode.resetClock(modeClock)
+    }
+    
     switch mode {
     case .oamSearch:
       if expired {
-        modeClock = 0
         mode = .vramSearch
       }
       
     case .vramSearch:
       if expired {
-        modeClock = 0
         mode = .hBlank
         
         renderScanline()
@@ -69,7 +71,6 @@ public extension PPU {
       
     case .hBlank:
       if expired {
-        modeClock = 0
         line += 1
         
         if line == 143 {
@@ -83,7 +84,6 @@ public extension PPU {
       break
     case .vBlank:
       if expired {
-        modeClock = 0
         line += 1
         
         if line > 153 {
