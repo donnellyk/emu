@@ -1,5 +1,7 @@
 import Foundation
 
+typealias Cycles = Int
+
 public class CPU {
   var masterInteruptFlag: Bool = false
   
@@ -14,16 +16,16 @@ public class CPU {
     registers = Registers()
   }
   
-  func step() {
-    execute(I.table[nextByte()])
+  func step() -> Cycles {
+    return execute(I.table[nextByte()])
   }
   
   /// Executes an instruction and incremented the cycle count
   ///
   /// - Parameter instruction: Instruction to be executed
-  func execute(_ instruction: Instruction) {
+  func execute(_ instruction: Instruction) -> Cycles {
     instruction.operation(self)
-    // TODO: Something with the instruction.cycles(self)
+    return instruction.cycles(self)
   }
   
   /// Reads 8-bit value from program counter address and increments counter
