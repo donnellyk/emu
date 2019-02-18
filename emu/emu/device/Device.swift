@@ -19,6 +19,8 @@ public class Device {
 public extension Device {
   func boot(cartridge: Cartridge? = nil) {
     cpu.mmu = MMU(cart: cartridge)
+    gpu.mmu = cpu.mmu
+    
     cpu.boot()
     gpu.boot()
     
@@ -26,12 +28,17 @@ public extension Device {
   }
   
   func startRunLoop() {
-    
+    DispatchQueue.main.async {
+      self.step()
+    }
   }
   
   func step() {
-    cpu.step()
-    gpu.step(cycles: 0)
+    let cycles = cpu.step()
+    gpu.step(cycles: cycles)
+    DispatchQueue.main.async {
+      self.step()
+    }
   }
 }
 
