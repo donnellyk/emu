@@ -799,8 +799,8 @@ struct I {
   
   static func jr(_ condition: @escaping (CPU) -> Bool) -> Operation {
     return {
-      let a = $0.registers.pc
       let n = Int8(bitPattern: $0.nextByte())
+      let a = $0.registers.pc
 
       guard condition($0) else {
         return
