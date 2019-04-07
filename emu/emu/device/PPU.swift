@@ -94,7 +94,7 @@ public extension PPU {
   }
     
   func renderScanline() {
-    guard !(mmu.lcdc.stopFlag) else {
+    guard mmu.lcdc.stopFlag else {
       return
     }
     
