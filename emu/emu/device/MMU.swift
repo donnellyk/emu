@@ -57,6 +57,8 @@ public class MMU {
     (0..<0xFFFE).forEach { _ in
       memory.append(0)
     }
+    
+    write(true, at: .bios)
   }
   
   public func read(_ register: RegisterAddress) -> UInt8 {
