@@ -35,6 +35,11 @@ extension UInt16 {
 }
 
 extension UInt8 {
+  var toHex: String {
+    return UInt16(clamping: self).toHex
+  }
+  
+  
   func get(bits: UInt8...) -> UInt8 {
     return bits.reduce(0) { (r, e) in
       return (r << 1) | bit(e)
