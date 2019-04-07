@@ -16,8 +16,7 @@ public class PPU {
   var modeClock: Int = 0
   var mode: Mode {
     get {
-      let value = mmu.read(.stat)
-      return PPU.Mode(rawValue: value & 0x02)!
+      return mmu.stat.mode
     }
     set {
       let value = (mmu.read(.stat) & ~3) | newValue.rawValue

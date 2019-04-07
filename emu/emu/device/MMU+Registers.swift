@@ -76,7 +76,7 @@ extension MMU {
     }
     
     var mode: PPU.Mode {
-      return PPU.Mode(rawValue: value & 0x02)!
+      return PPU.Mode(rawValue: value & 0x03)!
     }
     
     var matchFlag: Bool {
