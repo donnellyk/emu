@@ -4,12 +4,12 @@ class ViewController: NSViewController {
   var queue: DispatchQueue = DispatchQueue(label: "Render")
   
   @IBOutlet weak var screenImage: NSImageView!
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
+
+  override func viewDidDisappear() {
+    super.viewDidDisappear()
     
     let device = (NSApplication.shared.delegate as! AppDelegate).device
-    device?.screen = self
+    device?.screen = nil
   }
 }
 

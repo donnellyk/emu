@@ -13,6 +13,8 @@ public class Device {
   init(mmu: MMU = MMU()) {
     self.cpu = CPU(mmu: mmu)
     self.gpu = PPU(mmu: mmu)
+    
+    self.gpu.delegate = self
   }
 }
 
