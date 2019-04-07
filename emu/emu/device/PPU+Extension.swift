@@ -39,6 +39,15 @@ public extension PPU {
     func resetClock(_ clock: Int) -> Int {
       return clock % timing
     }
+    
+    func prettyPrint() -> String {
+      switch self {
+      case .oamSearch: return "OAM Search"
+      case .vramSearch: return "VRAM Search"
+      case .hBlank: return "HBlank"
+      case .vBlank: return "VBlank"
+      }
+    }
   }
   
   public enum ObjBlockMode {

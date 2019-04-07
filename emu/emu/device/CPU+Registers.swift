@@ -139,6 +139,14 @@ public extension CPU {
       self.h = h
       self.c = c
     }
+    
+    func prettyPrint() -> String {
+      return """
+      Flags
+      Z: \(z), N: \(n), H: \(h), C: \(c)
+      
+      """
+    }
   }
   
   class Registers {
@@ -189,6 +197,22 @@ public extension CPU {
       set {
         (h, l) = split(newValue)
       }
+    }
+    
+    func prettyPrint() -> String {
+      return """
+      CPU Registers
+      a - \(a.toHex)
+      b - \(b.toHex)
+      c - \(c.toHex)
+      d - \(d.toHex)
+      e - \(e.toHex)
+      hl - \(hl.toHex)
+      pc - \(pc.toHex)
+      sp - \(sp.toHex)
+      
+      \(flags.prettyPrint())
+      """
     }
     
     private func split(_ value:UInt16) -> (high: UInt8, low: UInt8) {

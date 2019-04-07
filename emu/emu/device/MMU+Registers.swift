@@ -51,6 +51,21 @@ extension MMU {
     var stopFlag: Bool {
       return value.test(7)
     }
+    
+    func prettyPrint() -> String {
+      return """
+      LCDC
+      bgDisplayFlag - \(bgDisplayFlag)
+      objFlag - \(objFlag)
+      objBlockCompFlag - \(objBlockCompFlag)
+      bgCodeAreaFlag - \(bgCodeAreaFlag)
+      bgCharAreaFlag - \(bgCharAreaFlag)
+      windowFlag - \(windowFlag)
+      windowCodeAreaFlag - \(windowCodeAreaFlag)
+      stopFlag - \(stopFlag)
+      
+      """
+    }
   }
   
   struct STAT {
@@ -66,6 +81,15 @@ extension MMU {
     
     var matchFlag: Bool {
       return value.test(2)
+    }
+    
+    func prettyPrint() -> String {
+      return """
+      STAT
+      mode - \(mode.prettyPrint())
+      matchFlag - \(matchFlag)
+      
+      """
     }
     
     // TODO: Interrupts?!
