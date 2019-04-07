@@ -22,6 +22,9 @@
 		0AC6A46521D83ACA00E3FA19 /* MMU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A46121D83ACA00E3FA19 /* MMU.swift */; };
 		0AC6A46621D83ACA00E3FA19 /* CPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A46221D83ACA00E3FA19 /* CPU.swift */; };
 		0AC6A46721D83ACA00E3FA19 /* CPU+Registers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A46321D83ACA00E3FA19 /* CPU+Registers.swift */; };
+		0ACF0F552223570700E19A49 /* Instruction+Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF0F542223570700E19A49 /* Instruction+Debug.swift */; };
+		0ACF0F592223782A00E19A49 /* DebugService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF0F582223782A00E19A49 /* DebugService.swift */; };
+		0ACF0F5B222387D300E19A49 /* DebugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACF0F5A222387D300E19A49 /* DebugViewController.swift */; };
 		0ADAD0F321FE303E000147CB /* MMU+Registers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADAD0F221FE303E000147CB /* MMU+Registers.swift */; };
 		0ADAD0F521FE3A1F000147CB /* PPU+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ADAD0F421FE3A1F000147CB /* PPU+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -57,6 +60,9 @@
 		0AC6A46121D83ACA00E3FA19 /* MMU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MMU.swift; sourceTree = "<group>"; };
 		0AC6A46221D83ACA00E3FA19 /* CPU.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPU.swift; sourceTree = "<group>"; };
 		0AC6A46321D83ACA00E3FA19 /* CPU+Registers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CPU+Registers.swift"; sourceTree = "<group>"; };
+		0ACF0F542223570700E19A49 /* Instruction+Debug.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+Debug.swift"; sourceTree = "<group>"; };
+		0ACF0F582223782A00E19A49 /* DebugService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugService.swift; sourceTree = "<group>"; };
+		0ACF0F5A222387D300E19A49 /* DebugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugViewController.swift; sourceTree = "<group>"; };
 		0ADAD0F221FE303E000147CB /* MMU+Registers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MMU+Registers.swift"; sourceTree = "<group>"; };
 		0ADAD0F421FE3A1F000147CB /* PPU+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PPU+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,6 +114,7 @@
 		0AC6A44021D83AA000E3FA19 /* emu */ = {
 			isa = PBXGroup;
 			children = (
+				0ACF0F572223782100E19A49 /* Debug */,
 				0A3EE0A021F80C48000C26A2 /* Utilities */,
 				0AC6A45F21D83AB700E3FA19 /* device */,
 				0AC6A44121D83AA000E3FA19 /* AppDelegate.swift */,
@@ -137,6 +144,7 @@
 				0AC6A46321D83ACA00E3FA19 /* CPU+Registers.swift */,
 				0AC6A46021D83ACA00E3FA19 /* Instructions.swift */,
 				0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */,
+				0ACF0F542223570700E19A49 /* Instruction+Debug.swift */,
 				0AC6A46121D83ACA00E3FA19 /* MMU.swift */,
 				0ADAD0F221FE303E000147CB /* MMU+Registers.swift */,
 				0A5B816921F3EC5800C531A5 /* Cartridge.swift */,
@@ -145,6 +153,15 @@
 				0ADAD0F421FE3A1F000147CB /* PPU+Extension.swift */,
 			);
 			path = device;
+			sourceTree = "<group>";
+		};
+		0ACF0F572223782100E19A49 /* Debug */ = {
+			isa = PBXGroup;
+			children = (
+				0ACF0F582223782A00E19A49 /* DebugService.swift */,
+				0ACF0F5A222387D300E19A49 /* DebugViewController.swift */,
+			);
+			path = Debug;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -250,6 +267,7 @@
 			files = (
 				0AC6A44421D83AA000E3FA19 /* ViewController.swift in Sources */,
 				0AC6A46421D83ACA00E3FA19 /* Instructions.swift in Sources */,
+				0ACF0F552223570700E19A49 /* Instruction+Debug.swift in Sources */,
 				0AC6A46621D83ACA00E3FA19 /* CPU.swift in Sources */,
 				0ADAD0F521FE3A1F000147CB /* PPU+Extension.swift in Sources */,
 				0AC6A44221D83AA000E3FA19 /* AppDelegate.swift in Sources */,
@@ -257,6 +275,8 @@
 				0AC6A46521D83ACA00E3FA19 /* MMU.swift in Sources */,
 				0A4A446921E4F48A00C7E8CB /* Instruction+Ext.swift in Sources */,
 				0AC6A46721D83ACA00E3FA19 /* CPU+Registers.swift in Sources */,
+				0ACF0F5B222387D300E19A49 /* DebugViewController.swift in Sources */,
+				0ACF0F592223782A00E19A49 /* DebugService.swift in Sources */,
 				0A3EE0A821F8B68C000C26A2 /* PPU.swift in Sources */,
 				0A5B816A21F3EC5800C531A5 /* Cartridge.swift in Sources */,
 				0A3EE0A221F80C66000C26A2 /* Conveniences.swift in Sources */,
