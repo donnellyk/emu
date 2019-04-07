@@ -17,7 +17,14 @@ public class CPU {
   }
   
   func step() -> Cycles {
-    return execute(I.table[nextByte()])
+    let programCounter = registers.pc
+    
+    let instruction = I.table[nextByte()]
+    
+    let summary = instruction.opCodeString(nextByte: lookAhead(), nextWord: lookAhead())
+    DebugService.shared.performingInstruction(opSummary: summary, programCounter: programCounter)
+
+    return execute(instruction)
   }
   
   /// Executes an instruction and incremented the cycle count
@@ -36,6 +43,15 @@ public class CPU {
       registers.pc += 1
     }
     
+    return mmu.read(registers.pc)
+  }
+  
+  // Reads the memory at the current program counter without incrementing the cycle count
+  func lookAhead() -> UInt8 {
+    return mmu.read(registers.pc)
+  }
+  
+  func lookAhead() -> UInt16 {
     return mmu.read(registers.pc)
   }
   

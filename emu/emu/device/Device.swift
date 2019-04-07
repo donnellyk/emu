@@ -36,12 +36,29 @@ public extension Device {
   func step() {
     let cycles = cpu.step()
     gpu.step(cycles: cycles)
-    DispatchQueue.main.async {
-      self.step()
+    
+    if DebugService.shared.shouldStep() {
+      DispatchQueue.main.async {
+        self.step()
+        DebugService.shared.didStep()
+      }
     }
   }
 }
 
+
+// MARK: - Debug Interface
+extension Device {
+  func debugStep() {
+    step()
+  }
+  
+  func debugResume() {
+    step()
+  }
+}
+
+// MARK: - PPU Callback
 extension Device : PPUDelegate {
   func ppu(_ ppu: PPU, didDraw bitmap: PPU.BitMap) {
     screen?.display(bitmap)
