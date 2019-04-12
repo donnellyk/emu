@@ -59,7 +59,7 @@ struct I {
     Instruction(opcode: 0x1F, operation: rr(.a)),
     
     // 0x2n
-    Instruction(opcode: 0x20, operation: jr(C.notZ), cycles: { C.notZ($0) ? 12 : 8 }),
+    Instruction(opcode: 0x20, operation: jr(Cnd.notZ), cycles: { Cnd.notZ($0) ? 12 : 8 }),
     Instruction(opcode: 0x21, operation: ldd_r_nn(.hl), cycles: 12),
     Instruction(opcode: 0x22, operation: ld_hl_a_inc(), cycles: 8),
     Instruction(opcode: 0x23, operation: inc(.hl), cycles: 8),
@@ -67,7 +67,7 @@ struct I {
     Instruction(opcode: 0x25, operation: dec(.h)),
     Instruction(opcode: 0x26, operation: ld_r_nn(.h), cycles: 8),
     Instruction(opcode: 0x27, operation: daa()),
-    Instruction(opcode: 0x28, operation: jr(C.zSet), cycles: { C.zSet($0) ? 12 : 8 }),
+    Instruction(opcode: 0x28, operation: jr(Cnd.zSet), cycles: { Cnd.zSet($0) ? 12 : 8 }),
     Instruction(opcode: 0x29, operation: add_hl(.hl), cycles: 8),
     Instruction(opcode: 0x2A, operation: ld_a_hl_inc(), cycles: 8),
     Instruction(opcode: 0x2B, operation: dec(.hl), cycles: 8),
@@ -77,7 +77,7 @@ struct I {
     Instruction(opcode: 0x2F, operation: cpl()),
     
     // 0x3n
-    Instruction(opcode: 0x30, operation: jr(C.notC), cycles: { C.notC($0) ? 12 : 8 }),
+    Instruction(opcode: 0x30, operation: jr(Cnd.notC), cycles: { Cnd.notC($0) ? 12 : 8 }),
     Instruction(opcode: 0x31, operation: ldd_r_nn(.sp), cycles: 12),
     Instruction(opcode: 0x32, operation: ld_hl_a_dec(), cycles: 8),
     Instruction(opcode: 0x33, operation: inc(.sp), cycles: 8),
@@ -85,7 +85,7 @@ struct I {
     Instruction(opcode: 0x35, operation: dec(.hl, true), cycles: 12),
     Instruction(opcode: 0x36, operation: ld_r_nn(.hl), cycles: 12),
     Instruction(opcode: 0x37, operation: scf(), cycles: 4),
-    Instruction(opcode: 0x38, operation: jr(C.cSet), cycles: { C.zSet($0) ? 12 : 8 }),
+    Instruction(opcode: 0x38, operation: jr(Cnd.cSet), cycles: { Cnd.zSet($0) ? 12 : 8 }),
     Instruction(opcode: 0x39, operation: add_hl(.sp), cycles: 8),
     Instruction(opcode: 0x3A, operation: ld_a_hl_dec(), cycles: 8),
     Instruction(opcode: 0x3B, operation: dec(.sp), cycles: 8),
@@ -239,37 +239,37 @@ struct I {
     Instruction(opcode: 0xBF, operation: cp_a(.a)),
     
     // 0xCn
-    Instruction(opcode: 0xC0, operation: ret(C.notZ), cycles: { C.notZ($0) ? 20 : 8 }),
+    Instruction(opcode: 0xC0, operation: ret(Cnd.notZ), cycles: { Cnd.notZ($0) ? 20 : 8 }),
     Instruction(opcode: 0xC1, operation: pop(.bc), cycles: 12),
-    Instruction(opcode: 0xC2, operation: jump(C.notZ), cycles: { C.notZ($0) ? 16 : 12 }),
+    Instruction(opcode: 0xC2, operation: jump(Cnd.notZ), cycles: { Cnd.notZ($0) ? 16 : 12 }),
     Instruction(opcode: 0xC3, operation: jump_nn(), cycles: 16),
-    Instruction(opcode: 0xC4, operation: call(C.notZ), cycles: { C.notZ($0) ? 24 : 12 }),
+    Instruction(opcode: 0xC4, operation: call(Cnd.notZ), cycles: { Cnd.notZ($0) ? 24 : 12 }),
     Instruction(opcode: 0xC5, operation: push(.bc), cycles: 16),
     Instruction(opcode: 0xC6, operation: add_a(), cycles: 8),
     Instruction(opcode: 0xC7, operation: restart(0), cycles: 16),
-    Instruction(opcode: 0xC8, operation: ret(C.zSet), cycles: { C.zSet($0) ? 20 : 8 }),
+    Instruction(opcode: 0xC8, operation: ret(Cnd.zSet), cycles: { Cnd.zSet($0) ? 20 : 8 }),
     Instruction(opcode: 0xC9, operation: ret(), cycles: 16),
-    Instruction(opcode: 0xCA, operation: jump(C.zSet), cycles: { C.zSet($0) ? 16 : 12 }),
+    Instruction(opcode: 0xCA, operation: jump(Cnd.zSet), cycles: { Cnd.zSet($0) ? 16 : 12 }),
     Instruction(opcode: 0xCB, operation: prefix(), cycles: 4),
-    Instruction(opcode: 0xCC, operation: call(C.zSet), cycles: { C.zSet($0) ? 24 : 12 }),
+    Instruction(opcode: 0xCC, operation: call(Cnd.zSet), cycles: { Cnd.zSet($0) ? 24 : 12 }),
     Instruction(opcode: 0xCD, operation: call_nn(), cycles: 24),
     Instruction(opcode: 0xCE, operation: adc_a_n(), cycles: 8),
     Instruction(opcode: 0xCF, operation: restart(8), cycles: 16),
     
     // 0xDn
-    Instruction(opcode: 0xD0, operation: ret(C.notC), cycles: { C.notC($0) ? 20 : 8 }),
+    Instruction(opcode: 0xD0, operation: ret(Cnd.notC), cycles: { Cnd.notC($0) ? 20 : 8 }),
     Instruction(opcode: 0xD1, operation: pop(.de), cycles: 12),
-    Instruction(opcode: 0xD2, operation: jump(C.notC), cycles: { C.notC($0) ? 16 : 12 }),
+    Instruction(opcode: 0xD2, operation: jump(Cnd.notC), cycles: { Cnd.notC($0) ? 16 : 12 }),
     Instruction(opcode: 0xD3, operation: { _ in assertionFailure() }),
-    Instruction(opcode: 0xD4, operation: call(C.notC), cycles: { C.notC($0) ? 24 : 12 }),
+    Instruction(opcode: 0xD4, operation: call(Cnd.notC), cycles: { Cnd.notC($0) ? 24 : 12 }),
     Instruction(opcode: 0xD5, operation: push(.de), cycles: 16),
     Instruction(opcode: 0xD6, operation: sub_a(), cycles: 8),
     Instruction(opcode: 0xD7, operation: restart(10), cycles: 16),
-    Instruction(opcode: 0xD8, operation: ret(C.cSet), cycles: { C.cSet($0) ? 20 : 8 }),
+    Instruction(opcode: 0xD8, operation: ret(Cnd.cSet), cycles: { Cnd.cSet($0) ? 20 : 8 }),
     Instruction(opcode: 0xD9, operation: reti(), cycles: 16),
-    Instruction(opcode: 0xDA, operation: jump(C.cSet), cycles: { C.cSet($0) ? 16 : 12 }),
+    Instruction(opcode: 0xDA, operation: jump(Cnd.cSet), cycles: { Cnd.cSet($0) ? 16 : 12 }),
     Instruction(opcode: 0xDB, operation: { _ in assertionFailure() }),
-    Instruction(opcode: 0xDC, operation: call(C.cSet), cycles: { C.cSet($0) ? 24 : 12 }),
+    Instruction(opcode: 0xDC, operation: call(Cnd.cSet), cycles: { Cnd.cSet($0) ? 24 : 12 }),
     Instruction(opcode: 0xDD, operation: { _ in assertionFailure() }, cycles: 0),
     Instruction(opcode: 0xDE, operation: sbc_a(), cycles: 8),
     Instruction(opcode: 0xDF, operation: restart(18), cycles: 16),
@@ -867,8 +867,7 @@ struct I {
 }
 
 // MARK: - Reused Flag conditionals
-// (hence the C)
-struct C {
+struct Cnd {
   static var notZ: (CPU) -> Bool {
     return {
       return !self.zSet($0)

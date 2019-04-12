@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A04C2DE226141F3005F8842 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A04C2DD226141F3005F8842 /* Canvas.swift */; };
 		0A3EE0A221F80C66000C26A2 /* Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A121F80C66000C26A2 /* Conveniences.swift */; };
 		0A3EE0A421F81B69000C26A2 /* bios.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A321F81B69000C26A2 /* bios.bin */; };
 		0A3EE0A621F81C1E000C26A2 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A521F81C1E000C26A2 /* Device.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A04C2DD226141F3005F8842 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
 		0A3EE0A121F80C66000C26A2 /* Conveniences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conveniences.swift; sourceTree = "<group>"; };
 		0A3EE0A321F81B69000C26A2 /* bios.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = bios.bin; sourceTree = "<group>"; };
 		0A3EE0A521F81C1E000C26A2 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				0AC6A45F21D83AB700E3FA19 /* device */,
 				0AC6A44121D83AA000E3FA19 /* AppDelegate.swift */,
 				0AC6A44321D83AA000E3FA19 /* ViewController.swift */,
+				0A04C2DD226141F3005F8842 /* Canvas.swift */,
 				0AC6A44521D83AA300E3FA19 /* Assets.xcassets */,
 				0AC6A44721D83AA300E3FA19 /* Main.storyboard */,
 				0AC6A44A21D83AA300E3FA19 /* Info.plist */,
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0AC6A44421D83AA000E3FA19 /* ViewController.swift in Sources */,
+				0A04C2DE226141F3005F8842 /* Canvas.swift in Sources */,
 				0AC6A46421D83ACA00E3FA19 /* Instructions.swift in Sources */,
 				0ACF0F552223570700E19A49 /* Instruction+Debug.swift in Sources */,
 				0AC6A46621D83ACA00E3FA19 /* CPU.swift in Sources */,

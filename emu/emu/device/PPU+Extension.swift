@@ -98,7 +98,7 @@ public extension PPU {
   }
   
   public struct Palette {
-    enum Color : UInt8 {
+    enum PColor : UInt8 {
       case white, lightGrey, darkGrey, black
       
       var value: (r: UInt8, g: UInt8, b: UInt8) {
@@ -113,76 +113,112 @@ public extension PPU {
           return (0x00, 0x00, 0x00)
         }
       }
+      
+      var hexString: String {
+        switch self {
+        case .white:
+          return "#FFFFFF"
+        case .lightGrey:
+          return "#CCCCCC"
+        case .darkGrey:
+          return "#777777"
+        case .black:
+          return "#000000"
+        }
+      }
     }
     
     let value: UInt8
     
-    func getColor(num: UInt8) -> Color {
+    func getColor(num: UInt8) -> PColor {
       switch num {
       case 0b00:
-        return Color(rawValue: value.get(bits: 1, 0))!
+        return PColor(rawValue: value.get(bits: 1, 0))!
       case 0b01:
-        return Color(rawValue: value.get(bits: 3, 2))!
+        return PColor(rawValue: value.get(bits: 3, 2))!
       case 0b10:
-        return Color(rawValue: value.get(bits: 5, 4))!
+        return PColor(rawValue: value.get(bits: 5, 4))!
       default:
-        return Color(rawValue: value.get(bits: 7, 6))!
+        return PColor(rawValue: value.get(bits: 7, 6))!
       }
     }
   }
 
   
   public struct BitMap {
-    private(set) var data = Data()
-    
+//    private(set) var data = Data()
+    private(set) var canvas: BitmapCanvas = BitmapCanvas(160, 144)
+    var index = NSPoint(x: 0, y: 0)
+
     public struct Line {
-      private(set) var data = Data()
+//      private(set) var data = Data()
+      private(set) var pixels = [Pixel]()
       
-      mutating func addPixel(_ pixel: Pixel) {
-        data.append(contentsOf: pixel.data)
-      }
+      
+//      mutating func addPixel(_ pixel: Pixel) {
+//        data.append(contentsOf: pixel.data)
+//      }
       
       mutating func addPixels(_ pixels: [Pixel]) {
-        pixels.forEach{ addPixel($0) }
+        self.pixels.append(contentsOf: pixels)
+//
+//        pixels.forEach {
+//          addPixel($0)
+//        }
       }
     }
     
     public struct Pixel {
-      let data: Data
+//      let data: Data
+      let value: Palette.PColor
       
-      init(color: Palette.Color) {
-        let value = color.value
-        
-        var data = Data()
-        data.append(contentsOf: [
-          value.r, // Red
-          value.g, // Green
-          value.b // Blue
-        ])
-        
-        self.data = data
+      init(color: Palette.PColor) {
+        value = color
+//
+//        var data = Data()
+//        data.append(contentsOf: [
+//          value.r, // Red
+//          value.g, // Green
+//          value.b // Blue
+//        ])
+//
+//        self.data = data
       }
     }
     
     
     mutating func addLine(_ line: Line) {
-      data.append(contentsOf: line.data)
+//      data.append(contentsOf: line.data)
+      line.pixels.forEach {
+        canvas.setColor(index, color: $0.value.hexString)
+        index.y += 1
+      }
+      
+      index.x += 1
+      index.y = 0
     }
     
     func makeImage() -> CGImage? {
-      return CGImage(
-        width: 160,
-        height: 144,
-        bitsPerComponent: 8,
-        bitsPerPixel: 24,
-        bytesPerRow: 480,
-        space: CGColorSpace(name: CGColorSpace.genericRGBLinear)!,
-        bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue),
-        provider: CGDataProvider(data: data as CFData)!,
-        decode: nil,
-        shouldInterpolate: true,
-        intent: .defaultIntent
-      )!
+      return canvas.bitmapImageRep.cgImage
+      
+//      guard let data = CGDataProvider(data: data as CFData) else {
+//        print("MAKE IMAGE - NIL")
+//        return nil
+//      }
+//
+//      return CGImage(
+//        width: 160,
+//        height: 144,
+//        bitsPerComponent: 8,
+//        bitsPerPixel: 24,
+//        bytesPerRow: 480,
+//        space: CGColorSpace(name: CGColorSpace.genericRGBLinear)!,
+//        bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue),
+//        provider: data,
+//        decode: nil,
+//        shouldInterpolate: true,
+//        intent: .defaultIntent
+//      )!
     }
   }
 }
