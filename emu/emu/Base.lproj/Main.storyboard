@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -82,6 +82,12 @@
                                                 <segue destination="aYl-vr-HSj" kind="show" id="LIN-0i-hoj"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem title="View Full Buffer" keyEquivalent="D" id="4de-YI-jWd">
+                                            <connections>
+                                                <action selector="newDocument:" target="Ady-hI-5gd" id="mWL-XA-Yzw"/>
+                                                <segue destination="zH5-iL-OZL" kind="show" id="vK8-pb-0ag"/>
+                                            </connections>
+                                        </menuItem>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -116,7 +122,7 @@
                 </windowController>
                 <customObject id="Oky-zY-oP4" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="280"/>
+            <point key="canvasLocation" x="-34" y="300"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
@@ -144,7 +150,7 @@
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="774"/>
+            <point key="canvasLocation" x="-34" y="771"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="coO-Xv-cpF">
@@ -165,7 +171,7 @@
                 </windowController>
                 <customObject id="pv1-wQ-SF7" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="642" y="280"/>
+            <point key="canvasLocation" x="585" y="315"/>
         </scene>
         <!--Debug View Controller-->
         <scene sceneID="tUg-xe-Gop">
@@ -195,6 +201,10 @@
                                                 </textView>
                                             </subviews>
                                         </clipView>
+                                        <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="t9K-hn-ls0">
+                                            <rect key="frame" x="-100" y="-100" width="440" height="16"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="JX1-V9-WSa">
                                             <rect key="frame" x="424" y="0.0" width="16" height="224"/>
                                             <autoresizingMask key="autoresizingMask"/>
@@ -357,7 +367,56 @@
                 </viewController>
                 <customObject id="Wne-w7-NlA" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="642" y="789"/>
+            <point key="canvasLocation" x="585" y="918"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="zML-Z0-ub4">
+            <objects>
+                <customObject id="piV-sk-Uwr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <windowController id="zH5-iL-OZL" sceneMemberID="viewController">
+                    <window key="window" title="Buffer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="aMz-MW-DdC">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="245" y="301" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="zH5-iL-OZL" id="ogV-DQ-NmZ"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="Mfm-sT-KWD" kind="relationship" relationship="window.shadowedContentViewController" id="xy2-M8-PfA"/>
+                    </connections>
+                </windowController>
+            </objects>
+            <point key="canvasLocation" x="1210" y="307"/>
+        </scene>
+        <!--Debug Video Buffer View Controller-->
+        <scene sceneID="8BF-gd-1Nr">
+            <objects>
+                <viewController id="Mfm-sT-KWD" customClass="DebugVideoBufferViewController" customModule="emu" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" wantsLayer="YES" id="IfV-nR-MeC">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9sb-gI-6Fh">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="u40-Av-uw1"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="9sb-gI-6Fh" secondAttribute="trailing" id="6Hg-2h-jG3"/>
+                            <constraint firstAttribute="bottom" secondItem="9sb-gI-6Fh" secondAttribute="bottom" id="LgH-Rs-pje"/>
+                            <constraint firstItem="9sb-gI-6Fh" firstAttribute="top" secondItem="IfV-nR-MeC" secondAttribute="top" id="VKh-g6-gXU"/>
+                            <constraint firstItem="9sb-gI-6Fh" firstAttribute="leading" secondItem="IfV-nR-MeC" secondAttribute="leading" id="uUu-9z-ggb"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="screenImage" destination="9sb-gI-6Fh" id="DYU-4L-XRj"/>
+                    </connections>
+                </viewController>
+                <customObject id="1Fr-1M-GLs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1210" y="700"/>
         </scene>
     </scenes>
 </document>

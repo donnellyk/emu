@@ -19,6 +19,12 @@ class DebugService {
     }
   }
   
+  weak var debugScreen: Screen? {
+    didSet {
+      renderVideoBuffer()
+    }
+  }
+  
   private var device: Device! {
     return (NSApplication.shared.delegate as! AppDelegate).device
   }
@@ -32,7 +38,7 @@ extension DebugService {
     }
     
     if isPaused {
-      print("---------- PAUSED ----------")
+      print("---------- PAUSED - \(pcBreakpoint?.toHex ?? "") ----------")
     }
     
     return !isPaused
@@ -54,11 +60,22 @@ private extension DebugService {
     if shouldBreak() {
       isPaused = true
       NotificationCenter.default.post(name: .DebugServiceDidPause, object: nil)
+      
+      renderVideoBuffer()
     }
   }
   
   func shouldBreak() -> Bool {
     return device.cpu.registers.pc == pcBreakpoint
+  }
+  
+  func renderVideoBuffer() {
+    guard let debugScreen = debugScreen else {
+      return
+    }
+    
+    let fullBuffer = device.gpu.renderEntireBuffer()
+    debugScreen.display(fullBuffer)
   }
 }
 
