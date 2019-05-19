@@ -147,8 +147,12 @@ public extension PPU {
   
   public struct BitMap {
 //    private(set) var data = Data()
-    private(set) var canvas: BitmapCanvas = BitmapCanvas(160, 144)
+    private(set) var canvas: BitmapCanvas
     var index = NSPoint(x: 0, y: 0)
+    
+    init(size: CGSize = CGSize(width: 160, height: 144)) {
+      canvas = BitmapCanvas(Int(size.width), Int(size.height))
+    }
 
     public struct Line {
 //      private(set) var data = Data()

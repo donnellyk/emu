@@ -65,7 +65,7 @@ public extension PPU {
       if expired {
         mode = .hBlank
         
-        renderScanline()
+        renderScanlineToBitmap()
       }
       
     case .hBlank:
@@ -92,18 +92,38 @@ public extension PPU {
       }
     }
   }
-    
-  func renderScanline() {
-    guard mmu.lcdc.stopFlag else {
+  
+  
+  func renderScanlineToBitmap() {
+    guard let line = renderScanline() else {
       return
     }
+    
+    bitmap.addLine(line)
+  }
+  
+  /// Renders single scanline. If params are excluded in call, the correct registers are subtituted
+  ///
+  /// - Parameters:
+  ///   - lineLength: Width of buffer to render, in tiles. Defaults to GB screen size of 20. 32 is full buffer
+  ///   - scrollY: Line number from top to render. If nil, correct register is used
+  func renderScanline(lineLength: Int = 20, scrollY: UInt8? = nil) -> BitMap.Line? {
+    guard mmu.lcdc.stopFlag else {
+      return nil
+    }
+    
+    let sY = scrollY ?? mmu.read(.scy)
+    let sX = (scrollY == nil) ? 0 : mmu.read(.scx)
+    
     
     var line = BitMap.Line()
     
     // Render Background
     if mmu.lcdc.bgDisplayFlag {
-      for i in 0..<20 {
-        let pixels = renderTile(bytes: fetchTileLine(index: i))
+      for i in 0..<lineLength {
+        let tileLine = fetchTileLine(index: i, scrollX: sX, scrollY: sY)
+        
+        let pixels = renderTile(bytes: tileLine)
         line.addPixels(pixels)
       }
     }
@@ -118,15 +138,16 @@ public extension PPU {
       
     }
     
-    bitmap.addLine(line)
+    return line
   }
   
-  func fetchTileLine(index: Int) -> (UInt8, UInt8) {
+  func fetchTileLine(index: Int, scrollX sX: UInt8, scrollY sY: UInt8) -> (UInt8, UInt8) {
     let bgChar = mmu.lcdc.bgCharArea
     
     // ((line + syc) % 8) = current "line" within a tile. * 2 to get address offset, since each pixel line is 2 bytes
-    let tileLineOffset = UInt16(line &+ mmu.read(.scy)) % 8 * 2
-    let id = UInt16(fetchTileID(index: UInt16(index)))
+    let tileLineOffset = UInt16(line &+ sY) % 8 * 2
+    let id = UInt16(fetchTileID(index: UInt16(index), scrollX: sX, scrollY: sY))
+    
     
     let tileAddress = bgChar + (id * PPU.tileSize) // Address of beginning of the tile
     let lineAddress = tileAddress + tileLineOffset // Address for specific line of 8 pixels from tile
@@ -136,12 +157,15 @@ public extension PPU {
 
   /// Reads the tile id for the given line and index
   ///
-  /// - Parameter index: index of tile in the current line. Ex: First tile is 0, last is 19
+  /// - Parameters:
+  ///   - index: index of tile in the current line. Ex: First tile is 0, last is 19
+  ///   - scrollX: X screen offset, usually scx register value but overrideable
+  ///   - scrollY: Y screen offset, usually scy register value but overrideable
   /// - Returns: The ID of the tile, to be read from `BGCHAR`
   /// - Discussion: The ID will be adjusted as necessary based on the BGCodeArea flag, with the necessary offsets applied to be a positive value. Use as is.
-  func fetchTileID(index: UInt16) -> UInt16 {
-    let x = UInt16(mmu.read(.scx)) / PPU.tileIDSize
-    let y = UInt16(line &+ mmu.read(.scy)) / PPU.tileIDSize
+  func fetchTileID(index: UInt16, scrollX sX: UInt8, scrollY sY: UInt8) -> UInt16 {
+    let x = UInt16(sX) / PPU.tileIDSize
+    let y = UInt16(line &+ sY) / PPU.tileIDSize
     
     let coord = (y * PPU.bgWidth) + x
     let idAddress = mmu.lcdc.bgCodeArea + coord + UInt16(index)
@@ -175,3 +199,24 @@ public extension PPU {
     bitmap = BitMap() //Reset bitmap
   }
 }
+
+
+// MARK: - DEBUG
+extension PPU {
+  /// Renders the entire video buffer, ignoring screen size and ly/lx offsets.
+  ///
+  /// - Returns: Bitmap of entire video memory
+  func renderEntireBuffer() -> BitMap {
+    var bitmap = BitMap(size: CGSize(width: 256, height: 256))
+    
+    for i in 0..<256 {
+      if let line = renderScanline(lineLength: 32, scrollY: UInt8(clamping: i)) {
+        bitmap.addLine(line)
+      }
+    }
+    
+    return bitmap
+  }
+}
+
+
