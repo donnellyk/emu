@@ -17,7 +17,7 @@ public extension PPU {
 
 // MARK: DEFINITIONS
 public extension PPU {
-  public enum Mode : UInt8 {
+  enum Mode : UInt8 {
     case oamSearch = 2
     case vramSearch = 3
     case hBlank = 0
@@ -50,13 +50,13 @@ public extension PPU {
     }
   }
   
-  public enum ObjBlockMode {
+  enum ObjBlockMode {
     case mode8
     case mode16
   }
   
   
-  public struct Object {
+  struct Object {
     var x: UInt8
     var y: UInt8
     var chrCode: UInt8
@@ -97,7 +97,7 @@ public extension PPU {
     }
   }
   
-  public struct Palette {
+  struct Palette {
     enum PColor : UInt8 {
       case white, lightGrey, darkGrey, black
       
@@ -145,8 +145,7 @@ public extension PPU {
   }
 
   
-  public struct BitMap {
-//    private(set) var data = Data()
+  struct BitMap {
     private(set) var canvas: BitmapCanvas
     var index = NSPoint(x: 0, y: 0)
     
@@ -155,44 +154,24 @@ public extension PPU {
     }
 
     public struct Line {
-//      private(set) var data = Data()
       private(set) var pixels = [Pixel]()
       
       
-//      mutating func addPixel(_ pixel: Pixel) {
-//        data.append(contentsOf: pixel.data)
-//      }
-      
       mutating func addPixels(_ pixels: [Pixel]) {
         self.pixels.append(contentsOf: pixels)
-//
-//        pixels.forEach {
-//          addPixel($0)
-//        }
       }
     }
     
     public struct Pixel {
-//      let data: Data
       let value: Palette.PColor
       
       init(color: Palette.PColor) {
         value = color
-//
-//        var data = Data()
-//        data.append(contentsOf: [
-//          value.r, // Red
-//          value.g, // Green
-//          value.b // Blue
-//        ])
-//
-//        self.data = data
       }
     }
     
     
     mutating func addLine(_ line: Line) {
-//      data.append(contentsOf: line.data)
       line.pixels.forEach {
         canvas.setColor(index, color: $0.value.hexString)
         index.y += 1
@@ -204,25 +183,6 @@ public extension PPU {
     
     func makeImage() -> CGImage? {
       return canvas.bitmapImageRep.cgImage
-      
-//      guard let data = CGDataProvider(data: data as CFData) else {
-//        print("MAKE IMAGE - NIL")
-//        return nil
-//      }
-//
-//      return CGImage(
-//        width: 160,
-//        height: 144,
-//        bitsPerComponent: 8,
-//        bitsPerPixel: 24,
-//        bytesPerRow: 480,
-//        space: CGColorSpace(name: CGColorSpace.genericRGBLinear)!,
-//        bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.noneSkipFirst.rawValue),
-//        provider: data,
-//        decode: nil,
-//        shouldInterpolate: true,
-//        intent: .defaultIntent
-//      )!
     }
   }
 }
