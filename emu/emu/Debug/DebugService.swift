@@ -38,6 +38,9 @@ extension DebugService {
     }
     
     if isPaused {
+      NotificationCenter.default.post(name: .DebugServiceDidPause, object: nil)
+
+      renderVideoBuffer()
       print("---------- PAUSED - \(pcBreakpoint?.toHex ?? "") ----------")
     }
     
@@ -59,9 +62,6 @@ private extension DebugService {
   func checkForBreakpoint() {
     if shouldBreak() {
       isPaused = true
-      NotificationCenter.default.post(name: .DebugServiceDidPause, object: nil)
-      
-      renderVideoBuffer()
     }
   }
   
