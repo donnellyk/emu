@@ -64,5 +64,6 @@ extension Device {
 extension Device : PPUDelegate {
   func ppu(_ ppu: PPU, didDraw bitmap: PPU.BitMap) {
     screen?.display(bitmap)
+    DebugService.shared.didPushToScreen()
   }
 }

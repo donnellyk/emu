@@ -215,6 +215,11 @@ extension PPU {
       }
     }
     
+    // Draw scroll offsets onto bitmap
+    let x = mmu.read(.scx)
+    let y = mmu.read(.scy)
+    bitmap.addDebugFrame(x: Int(x), y: Int(y))
+    
     return bitmap
   }
 }

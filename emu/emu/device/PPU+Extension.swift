@@ -181,6 +181,10 @@ public extension PPU {
       index.y = 0
     }
     
+    mutating func addDebugFrame(x: Int, y: Int) {
+      canvas.rectangle(NSRect(x: x, y: y, width: 160, height: 144), stroke: "#FF0000", fill: nil)
+    }
+    
     func makeImage() -> CGImage? {
       return canvas.bitmapImageRep.cgImage
     }

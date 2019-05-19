@@ -53,6 +53,10 @@ extension DebugService {
     executionHistory.append(opSummary)
   }
   
+  func didPushToScreen() {
+    renderVideoBuffer()
+  }
+  
   func didStep() {
     NotificationCenter.default.post(name: .DebugServiceProgramDidUpdate, object: nil)
   }
