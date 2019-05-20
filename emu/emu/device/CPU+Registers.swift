@@ -207,6 +207,7 @@ public extension CPU {
       c - \(c.toHex)
       d - \(d.toHex)
       e - \(e.toHex)
+      f - \(flags.byteValue.toHex)
       hl - \(hl.toHex)
       pc - \(pc.toHex)
       sp - \(sp.toHex)
