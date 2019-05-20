@@ -10,7 +10,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     device = Device()
     device.screen = (NSApplication.shared.mainWindow?.windowController?.contentViewController as? ViewController)
 
-    device.boot()
+    device.boot(cartridge: Cartridge())
   }
 
   func applicationWillTerminate(_ aNotification: Notification) {

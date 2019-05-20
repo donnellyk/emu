@@ -15,6 +15,7 @@
 		0A4A446921E4F48A00C7E8CB /* Instruction+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */; };
 		0A5B816A21F3EC5800C531A5 /* Cartridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5B816921F3EC5800C531A5 /* Cartridge.swift */; };
 		0AA361F92291A9D50045E0ED /* DebugVideoBufferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA361F82291A9D50045E0ED /* DebugVideoBufferViewController.swift */; };
+		0AA361FC229204940045E0ED /* tetris.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0AA361FB229204940045E0ED /* tetris.bin */; };
 		0AC6A44221D83AA000E3FA19 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A44121D83AA000E3FA19 /* AppDelegate.swift */; };
 		0AC6A44421D83AA000E3FA19 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AC6A44321D83AA000E3FA19 /* ViewController.swift */; };
 		0AC6A44621D83AA300E3FA19 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0AC6A44521D83AA300E3FA19 /* Assets.xcassets */; };
@@ -50,6 +51,7 @@
 		0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+Ext.swift"; sourceTree = "<group>"; };
 		0A5B816921F3EC5800C531A5 /* Cartridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cartridge.swift; sourceTree = "<group>"; };
 		0AA361F82291A9D50045E0ED /* DebugVideoBufferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugVideoBufferViewController.swift; sourceTree = "<group>"; };
+		0AA361FB229204940045E0ED /* tetris.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = tetris.bin; sourceTree = "<group>"; };
 		0AC6A43E21D83AA000E3FA19 /* emu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = emu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0AC6A44121D83AA000E3FA19 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0AC6A44321D83AA000E3FA19 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				0AC6A44A21D83AA300E3FA19 /* Info.plist */,
 				0AC6A44B21D83AA300E3FA19 /* emu.entitlements */,
 				0A3EE0A321F81B69000C26A2 /* bios.bin */,
+				0AA361FB229204940045E0ED /* tetris.bin */,
 			);
 			path = emu;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AA361FC229204940045E0ED /* tetris.bin in Resources */,
 				0AC6A44621D83AA300E3FA19 /* Assets.xcassets in Resources */,
 				0A3EE0A421F81B69000C26A2 /* bios.bin in Resources */,
 				0AC6A44921D83AA300E3FA19 /* Main.storyboard in Resources */,
