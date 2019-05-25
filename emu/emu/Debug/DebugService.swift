@@ -25,6 +25,12 @@ class DebugService {
     }
   }
   
+  weak var memoryMap: DebugMemoryViewController? {
+    didSet {
+      memoryMap?.setMemory(memory: device.cpu.mmu.copy())
+    }
+  }
+  
   private var device: Device! {
     return (NSApplication.shared.delegate as! AppDelegate).device
   }
@@ -41,6 +47,7 @@ extension DebugService {
       NotificationCenter.default.post(name: .DebugServiceDidPause, object: nil)
 
       renderVideoBuffer()
+      memoryMap?.setMemory(memory: device.cpu.mmu.copy())
       print("---------- PAUSED - \(pcBreakpoint?.toHex ?? "") ----------")
     }
     

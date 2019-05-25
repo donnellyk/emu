@@ -61,6 +61,10 @@ public class MMU {
     write(true, at: .bios)
   }
   
+  public func copy() -> [UInt8] {
+    return [UInt8](memory)
+  }
+  
   public func read(_ register: RegisterAddress) -> UInt8 {
     return read(register.rawValue)
   }

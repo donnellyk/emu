@@ -13,6 +13,7 @@
 		0A3EE0A621F81C1E000C26A2 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A521F81C1E000C26A2 /* Device.swift */; };
 		0A3EE0A821F8B68C000C26A2 /* PPU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A721F8B68C000C26A2 /* PPU.swift */; };
 		0A4A446921E4F48A00C7E8CB /* Instruction+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */; };
+		0A5A80C42299ECA000FF582E /* DebugMemoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5A80C32299ECA000FF582E /* DebugMemoryViewController.swift */; };
 		0A5B816A21F3EC5800C531A5 /* Cartridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5B816921F3EC5800C531A5 /* Cartridge.swift */; };
 		0AA361F92291A9D50045E0ED /* DebugVideoBufferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AA361F82291A9D50045E0ED /* DebugVideoBufferViewController.swift */; };
 		0AA361FC229204940045E0ED /* tetris.bin in Resources */ = {isa = PBXBuildFile; fileRef = 0AA361FB229204940045E0ED /* tetris.bin */; };
@@ -49,6 +50,7 @@
 		0A3EE0A521F81C1E000C26A2 /* Device.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		0A3EE0A721F8B68C000C26A2 /* PPU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PPU.swift; sourceTree = "<group>"; };
 		0A4A446821E4F48A00C7E8CB /* Instruction+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Instruction+Ext.swift"; sourceTree = "<group>"; };
+		0A5A80C32299ECA000FF582E /* DebugMemoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugMemoryViewController.swift; sourceTree = "<group>"; };
 		0A5B816921F3EC5800C531A5 /* Cartridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cartridge.swift; sourceTree = "<group>"; };
 		0AA361F82291A9D50045E0ED /* DebugVideoBufferViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugVideoBufferViewController.swift; sourceTree = "<group>"; };
 		0AA361FB229204940045E0ED /* tetris.bin */ = {isa = PBXFileReference; lastKnownFileType = archive.macbinary; path = tetris.bin; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 				0ACF0F582223782A00E19A49 /* DebugService.swift */,
 				0ACF0F5A222387D300E19A49 /* DebugViewController.swift */,
 				0AA361F82291A9D50045E0ED /* DebugVideoBufferViewController.swift */,
+				0A5A80C32299ECA000FF582E /* DebugMemoryViewController.swift */,
 			);
 			path = Debug;
 			sourceTree = "<group>";
@@ -293,6 +296,7 @@
 				0A5B816A21F3EC5800C531A5 /* Cartridge.swift in Sources */,
 				0A3EE0A221F80C66000C26A2 /* Conveniences.swift in Sources */,
 				0A3EE0A621F81C1E000C26A2 /* Device.swift in Sources */,
+				0A5A80C42299ECA000FF582E /* DebugMemoryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
