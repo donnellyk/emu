@@ -1,8 +1,32 @@
 import Cocoa
 
 class DebugMemoryViewController: NSViewController {
+  struct MemoryEntry {
+    var address: String
+    var row: Int
+    var value: UInt8
+    
+    init(_ row: Int, _ value: UInt8) {
+      self.row = row
+      self.address = UInt16(clamping: row).toHex
+      self.value = value
+    }
+  }
+  
   @IBOutlet weak var tableView: NSTableView!
-  private var memoryCopy: [UInt8] = []
+  @IBOutlet weak var field: NSSearchField!
+  private var memoryCopy: [UInt8] = [] {
+    didSet {
+      refilter()
+      tableView?.reloadData()
+    }
+  }
+  
+  private var filteredMemoryCopy: [MemoryEntry] = [] {
+    didSet {
+      tableView?.reloadData()
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -14,13 +38,33 @@ class DebugMemoryViewController: NSViewController {
   
   func setMemory(memory: [UInt8]) {
     memoryCopy = memory
-    tableView.reloadData()
+  }
+}
+
+extension DebugMemoryViewController: NSSearchFieldDelegate {
+  func controlTextDidChange(_ obj: Notification) {
+    refilter()
+  }
+  
+  func refilter() {
+    let formatedString = field.stringValue.replacingOccurrences(of: "0x", with: "")
+    
+    let lowerRange = formatedString.padding(toLength: 4, withPad: "0", startingAt: 0)
+    let upperRange = formatedString.padding(toLength: 4, withPad: "F", startingAt: 0)
+    
+    let lowerInt =  Int(lowerRange, radix: 16) ?? 0
+    var upperInt =  Int(upperRange, radix: 16) ?? (lowerInt + 1)
+    upperInt = min(upperInt, memoryCopy.count-1)
+    
+    let range = lowerInt...upperInt
+    
+    filteredMemoryCopy = Array(memoryCopy.enumerated())[range].map { (index, value) in return MemoryEntry(index, value) }
   }
 }
 
 extension DebugMemoryViewController : NSTableViewDelegate, NSTableViewDataSource {
   func numberOfRows(in tableView: NSTableView) -> Int {
-    return memoryCopy.count
+    return filteredMemoryCopy.count
   }
   
   
@@ -31,11 +75,11 @@ extension DebugMemoryViewController : NSTableViewDelegate, NSTableViewDataSource
     switch tableColumn {
     case tableView.tableColumns[0]:
       identifer = NSUserInterfaceItemIdentifier(rawValue: "AddressID")
-      value = UInt16(clamping: row).toHex
+      value = filteredMemoryCopy[row].address
       
     case tableView.tableColumns[1]:
       identifer = NSUserInterfaceItemIdentifier(rawValue: "ValueID")
-      value = memoryCopy[row].toHex
+      value = filteredMemoryCopy[row].value.toHex
       
     default:
       return nil
