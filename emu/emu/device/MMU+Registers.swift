@@ -55,14 +55,14 @@ extension MMU {
     func prettyPrint() -> String {
       return """
       LCDC
-      bgDisplayFlag - \(bgDisplayFlag)
-      objFlag - \(objFlag)
-      objBlockCompFlag - \(objBlockCompFlag)
-      bgCodeAreaFlag - \(bgCodeAreaFlag)
-      bgCharAreaFlag - \(bgCharAreaFlag)
-      windowFlag - \(windowFlag)
-      windowCodeAreaFlag - \(windowCodeAreaFlag)
-      stopFlag - \(stopFlag)
+      0: bgDisplayFlag - \(bgDisplayFlag)
+      1: objFlag - \(objFlag)
+      2: objBlockCompFlag - \(objBlockCompFlag)
+      3: bgCodeAreaFlag - \(bgCodeAreaFlag)
+      4: bgCharAreaFlag - \(bgCharAreaFlag)
+      5: windowFlag - \(windowFlag)
+      6: windowCodeAreaFlag - \(windowCodeAreaFlag)
+      7: LCD Enabled (Stop) - \(stopFlag)
       
       """
     }
