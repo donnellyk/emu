@@ -9,10 +9,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   func applicationDidFinishLaunching(_ aNotification: Notification) {
     _ = DebugService.shared.setBreakpoint("0x005b")
     
-    device = Device()
-    device.screen = (NSApplication.shared.mainWindow?.windowController?.contentViewController as? ViewController)
+    rebootDevice()
     
-    device.boot(cartridge: Cartridge())
+    DebugService.shared.updateOnEveryStep = true
     
     let debugController: NSWindowController = mainStoryboard.instantiateController(identifier: "DebugWindowController")
     
@@ -21,6 +20,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
   func applicationWillTerminate(_ aNotification: Notification) {
     // Insert code here to tear down your application
+  }
+  
+  func rebootDevice() {
+    device = Device()
+    device.screen = (NSApplication.shared.mainWindow?.windowController?.contentViewController as? ViewController)
+    
+    device.boot(cartridge: Cartridge())
   }
 }
 

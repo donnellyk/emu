@@ -2,8 +2,8 @@ import Cocoa
 
 extension NSNotification.Name {
   static let DebugServiceDidPause = NSNotification.Name("DebugServiceDidPause")
-  static let DebugServiceProgramDidUpdate = NSNotification.Name("DebugServiceProgramDidUpdate")
 }
+
 class DebugService {
   static var shared: DebugService = DebugService()
   weak var debugController: DebugController?
@@ -14,6 +14,7 @@ class DebugService {
   private(set) var isPaused: Bool = false
   
   var updateOnEveryStep: Bool = false
+  var consolePrintEnabled: Bool = false
   
   private var executionHistory = [String]() {
     didSet {
@@ -49,17 +50,18 @@ extension DebugService {
     
     if isPaused {
       NotificationCenter.default.post(name: .DebugServiceDidPause, object: nil)
+      debugController?.didPause()
 
       renderVideoBuffer()
       memoryMap?.setMemory(memory: device.cpu.mmu.copy())
-      print("---------- PAUSED - \(pcBreakpoint?.toHex ?? "") ----------")
+      cPrint("---------- PAUSED - \(pcBreakpoint?.toHex ?? "") ----------", override: true)
     }
     
     return !isPaused
   }
   
   func performingInstruction(opSummary: String, programCounter: UInt16) {
-    print("Instruction Executed: \(opSummary); \(programCounter.toHex)")
+    cPrint("Instruction Executed: \(opSummary); \(programCounter.toHex)")
     
     executionHistory.append(opSummary)
   }
@@ -69,8 +71,6 @@ extension DebugService {
   }
   
   func didStep() {
-    NotificationCenter.default.post(name: .DebugServiceProgramDidUpdate, object: nil)
-    
     if updateOnEveryStep {
       debugController?.updateProgramDisplay()
     }
@@ -95,6 +95,12 @@ private extension DebugService {
     
     let fullBuffer = device.gpu.renderEntireBuffer()
     debugScreen.display(fullBuffer)
+  }
+  
+  func cPrint(_ text: String, override: Bool = false) {
+    if override || consolePrintEnabled {
+      print(text)
+    }
   }
 }
 
