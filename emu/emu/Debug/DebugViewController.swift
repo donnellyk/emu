@@ -1,7 +1,13 @@
 import Cocoa
 
-class DebugViewController: NSViewController {
+protocol DebugController: class {
+  func updateProgramDisplay()
+  func didPause()
+}
+
+class DebugViewController: NSViewController, DebugController {
   @IBOutlet weak var pauseButton: NSButton!
+  @IBOutlet weak var toggleStepUpdateButton: NSButton!
   @IBOutlet weak var stepButton: NSButton!
   @IBOutlet weak var addressField: NSTextField!
   @IBOutlet weak var addressLabel: NSTextField!
@@ -12,19 +18,7 @@ class DebugViewController: NSViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    NotificationCenter.default.addObserver(
-      self,
-      selector: #selector(resetButtons),
-      name: .DebugServiceDidPause,
-      object: nil
-    )
-    
-//    NotificationCenter.default.addObserver(
-//      self,
-//      selector: #selector(updateProgramDisplay),
-//      name: .DebugServiceProgramDidUpdate,
-//      object: nil
-//    )
+    DebugService.shared.debugController = self
     
     resetButtons()
     updateProgramDisplay()
@@ -59,7 +53,12 @@ class DebugViewController: NSViewController {
     }
   }
   
-  @objc func resetButtons() {
+  @IBAction func everyStepTapped(_ sender: Any) {
+    DebugService.shared.updateOnEveryStep = !DebugService.shared.updateOnEveryStep
+    resetButtons()
+  }
+  
+  func resetButtons() {
     if DebugService.shared.isPaused {
       pauseButton.title = "Resume"
       stepButton.isHidden = false
@@ -67,9 +66,19 @@ class DebugViewController: NSViewController {
       pauseButton.title = "Pause"
       stepButton.isHidden = true
     }
+    
+    if DebugService.shared.updateOnEveryStep {
+      toggleStepUpdateButton.title = "Disable Every Step"
+    } else {
+      toggleStepUpdateButton.title = "Enable Every Step"
+    }
   }
   
-  @objc func updateProgramDisplay() {
+  func didPause() {
+    resetButtons()
+  }
+  
+  func updateProgramDisplay() {
     programField.string = DebugService.shared.generateProgram()
     
     registerLabel.stringValue = DebugService.shared.prettyRegisterValues

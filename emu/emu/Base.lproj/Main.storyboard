@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -252,10 +251,10 @@
                                         <rect key="frame" x="0.0" y="139" width="440" height="5"/>
                                     </box>
                                     <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KGN-RS-Ln1">
-                                        <rect key="frame" x="0.0" y="101" width="238" height="21"/>
+                                        <rect key="frame" x="0.0" y="40" width="238" height="82"/>
                                         <subviews>
                                             <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z1R-3V-cSD">
-                                                <rect key="frame" x="0.0" y="0.0" width="123" height="21"/>
+                                                <rect key="frame" x="0.0" y="31" width="123" height="21"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="123" id="klk-Pc-MFX"/>
                                                 </constraints>
@@ -266,7 +265,7 @@
                                                 </textFieldCell>
                                             </textField>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4uM-Lu-3f1">
-                                                <rect key="frame" x="125" y="-7" width="61" height="32"/>
+                                                <rect key="frame" x="125" y="24" width="61" height="32"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="21" id="e7x-fm-pIS"/>
                                                 </constraints>
@@ -279,7 +278,7 @@
                                                 </connections>
                                             </button>
                                             <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mNU-th-34D">
-                                                <rect key="frame" x="186" y="3" width="54" height="16"/>
+                                                <rect key="frame" x="186" y="33" width="54" height="16"/>
                                                 <textFieldCell key="cell" lineBreakMode="clipping" id="Mbc-la-1VB">
                                                     <font key="font" metaFont="system"/>
                                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -299,10 +298,10 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4wJ-0f-6ue">
-                                        <rect key="frame" x="0.0" y="0.0" width="131" height="82"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="282" height="21"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3S1-SJ-h0x">
-                                                <rect key="frame" x="-6" y="54" width="77" height="32"/>
+                                                <rect key="frame" x="-6" y="-7" width="77" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Pause" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="qzl-gC-UVd">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -312,7 +311,7 @@
                                                 </connections>
                                             </button>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z89-jM-Ksd">
-                                                <rect key="frame" x="69" y="54" width="68" height="32"/>
+                                                <rect key="frame" x="69" y="-7" width="68" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Step" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="7NU-eF-dcn">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -321,12 +320,24 @@
                                                     <action selector="stepTapped:" target="PPi-ia-3u4" id="lLb-aY-7Bc"/>
                                                 </connections>
                                             </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="H9m-aR-REY">
+                                                <rect key="frame" x="135" y="-7" width="153" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Update Every Step" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="A25-HH-8nB">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="everyStepTapped:" target="PPi-ia-3u4" id="2y9-s1-fOu"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                         </customSpacing>
@@ -369,6 +380,7 @@
                         <outlet property="programField" destination="ESL-5R-I0E" id="WEY-zd-9Im"/>
                         <outlet property="registerLabel" destination="nIT-gd-NzA" id="1Bu-uM-ccf"/>
                         <outlet property="stepButton" destination="Z89-jM-Ksd" id="HlR-bl-ZyM"/>
+                        <outlet property="toggleStepUpdateButton" destination="H9m-aR-REY" id="dr7-8l-Tr2"/>
                     </connections>
                 </viewController>
                 <customObject id="Wne-w7-NlA" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

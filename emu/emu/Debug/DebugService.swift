@@ -6,10 +6,14 @@ extension NSNotification.Name {
 }
 class DebugService {
   static var shared: DebugService = DebugService()
+  weak var debugController: DebugController?
+  
   private init() { }
   
   private(set) var pcBreakpoint: UInt16?
   private(set) var isPaused: Bool = false
+  
+  var updateOnEveryStep: Bool = false
   
   private var executionHistory = [String]() {
     didSet {
@@ -66,6 +70,10 @@ extension DebugService {
   
   func didStep() {
     NotificationCenter.default.post(name: .DebugServiceProgramDidUpdate, object: nil)
+    
+    if updateOnEveryStep {
+      debugController?.updateProgramDisplay()
+    }
   }
 }
 
