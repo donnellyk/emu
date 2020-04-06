@@ -58,6 +58,10 @@ class DebugViewController: NSViewController, DebugController {
     resetButtons()
   }
   
+  @IBAction func vramDumpTapped(_ sender: Any) {
+    DebugService.shared.vramDump()
+  }
+  
   func resetButtons() {
     if DebugService.shared.isPaused {
       pauseButton.title = "Resume"

@@ -11,7 +11,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     rebootDevice()
     
-    DebugService.shared.updateOnEveryStep = true
+//    DebugService.shared.updateOnEveryStep = true
     
     let debugController: NSWindowController = mainStoryboard.instantiateController(identifier: "DebugWindowController")
     

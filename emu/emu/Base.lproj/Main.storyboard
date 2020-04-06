@@ -298,7 +298,7 @@
                                         </customSpacing>
                                     </stackView>
                                     <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4wJ-0f-6ue">
-                                        <rect key="frame" x="0.0" y="0.0" width="282" height="21"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="397" height="21"/>
                                         <subviews>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3S1-SJ-h0x">
                                                 <rect key="frame" x="-6" y="-7" width="77" height="32"/>
@@ -330,13 +330,25 @@
                                                     <action selector="everyStepTapped:" target="PPi-ia-3u4" id="2y9-s1-fOu"/>
                                                 </connections>
                                             </button>
+                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1KZ-ie-U1K">
+                                                <rect key="frame" x="286" y="-7" width="117" height="32"/>
+                                                <buttonCell key="cell" type="push" title="VRAM Dump" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="yC6-Jt-0ne">
+                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                    <font key="font" metaFont="system"/>
+                                                </buttonCell>
+                                                <connections>
+                                                    <action selector="vramDumpTapped:" target="PPi-ia-3u4" id="eL2-MG-M8x"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
+                                            <integer value="1000"/>
                                         </visibilityPriorities>
                                         <customSpacing>
+                                            <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>
                                             <real value="3.4028234663852886e+38"/>

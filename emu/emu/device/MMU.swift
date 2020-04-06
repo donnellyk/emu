@@ -52,6 +52,9 @@ public class MMU {
     return read(.bios) == 1
   }
   
+  // DEBUG
+  var vram: VRAM = VRAM()
+  
   init(cart: Cartridge? = nil) {
     self.cartridge = cart
     (0..<0xFFFE).forEach { _ in
@@ -105,6 +108,7 @@ public class MMU {
   public func write(_ value: UInt8, at address: UInt16) {
     switch address {
     case 0x8000...0x9FFF: // VRAM
+      vram.write(address: address - VRAM.begin, value: value)
       memory[address] = value
     case 0xA000...0xBFFF: // Cart RAM
       cartridge?.write(value, at: address)

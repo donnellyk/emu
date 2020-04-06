@@ -75,6 +75,10 @@ extension DebugService {
       debugController?.updateProgramDisplay()
     }
   }
+  
+  func vramDump() {
+    print(device.cpu.mmu.vram.stringRepresentation)
+  }
 }
 
 private extension DebugService {
