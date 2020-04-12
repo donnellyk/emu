@@ -16,6 +16,7 @@ class DebugService {
   var updateOnEveryStep: Bool = false
   var consolePrintEnabled: Bool = false
   
+  private var lastPC: UInt16?
   private var executionHistory = [String]() {
     didSet {
       if executionHistory.count > 100 {
@@ -32,7 +33,13 @@ class DebugService {
   
   weak var memoryMap: DebugMemoryViewController? {
     didSet {
-      memoryMap?.setMemory(memory: device.cpu.mmu.copy())
+      fillMemoryMaps()
+    }
+  }
+  
+  weak var cartMap: DebugMemoryViewController? {
+    didSet {
+      fillMemoryMaps()
     }
   }
   
@@ -53,8 +60,8 @@ extension DebugService {
       debugController?.didPause()
 
       renderVideoBuffer()
-      memoryMap?.setMemory(memory: device.cpu.mmu.copy())
-      cPrint("---------- PAUSED - \(pcBreakpoint?.toHex ?? "") ----------", override: true)
+      fillMemoryMaps()
+      cPrint("---------- PAUSED - Counter: \(lastPC?.toHex ?? "0x__"), BreakPoint: \(pcBreakpoint?.toHex ?? "") ----------", override: true)
     }
     
     return !isPaused
@@ -63,6 +70,7 @@ extension DebugService {
   func performingInstruction(opSummary: String, programCounter: UInt16) {
     cPrint("Instruction Executed: \(opSummary); \(programCounter.toHex)")
     
+    lastPC = programCounter
     executionHistory.append(opSummary)
   }
   
@@ -106,6 +114,11 @@ private extension DebugService {
     if override || consolePrintEnabled {
       print(text)
     }
+  }
+  
+  func fillMemoryMaps() {
+    memoryMap?.setMemory(memory: device.cpu.mmu.copy())
+    cartMap?.setMemory(memory: [UInt8](device.cpu.mmu.cartridge?.data ?? []))
   }
 }
 

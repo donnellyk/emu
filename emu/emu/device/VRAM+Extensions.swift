@@ -89,14 +89,20 @@ extension VRAM {
     }
     
     var defaultColor: NSColor {
+      // Boot Color Palette
+//      switch self {
+//      case .one: return .white
+//      case .zero, .two, .three : return .black
+//      }
+//
       switch self {
       case .zero: return .white
-      case .one: return .lightGray
-      case .two: return .darkGray
+      case .one: return .black
+      case .two: return .black
       case .three: return .black
       }
     }
-    
+      
     init(lsb: UInt8, msb: UInt8) {
       switch (Int(lsb), Int(msb)) {
       case (0, 0): self = .zero

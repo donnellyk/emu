@@ -13,6 +13,8 @@ class DebugMemoryViewController: NSViewController {
     }
   }
   
+  @IBInspectable var isCartDump: Bool = false
+  
   @IBOutlet weak var tableView: NSTableView!
   @IBOutlet weak var field: NSSearchField!
   private var memoryCopy: [UInt8] = [] {
@@ -33,7 +35,11 @@ class DebugMemoryViewController: NSViewController {
     tableView.delegate = self
     tableView.dataSource = self
     
-    DebugService.shared.memoryMap = self
+    if isCartDump {
+      DebugService.shared.cartMap = self
+    } else {
+      DebugService.shared.memoryMap = self
+    }
   }
   
   func setMemory(memory: [UInt8]) {

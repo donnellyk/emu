@@ -7,7 +7,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
   var device: Device! = nil
 
   func applicationDidFinishLaunching(_ aNotification: Notification) {
-    _ = DebugService.shared.setBreakpoint("0x005b")
+    _ = DebugService.shared.setBreakpoint("0x00A3")
     
     rebootDevice()
     
