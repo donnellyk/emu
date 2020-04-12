@@ -192,15 +192,15 @@
                                     <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fif-O3-p0K">
                                         <rect key="frame" x="0.0" y="216" width="440" height="224"/>
                                         <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="sw8-xB-Byj">
-                                            <rect key="frame" x="0.0" y="0.0" width="440" height="224"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="425" height="224"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textView editable="NO" selectable="NO" drawsBackground="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="ESL-5R-I0E">
-                                                    <rect key="frame" x="0.0" y="0.0" width="440" height="224"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="425" height="224"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    <size key="minSize" width="440" height="224"/>
+                                                    <size key="minSize" width="425" height="224"/>
                                                     <size key="maxSize" width="440" height="10000000"/>
                                                     <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                                 </textView>
@@ -211,7 +211,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                         <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="JX1-V9-WSa">
-                                            <rect key="frame" x="424" y="0.0" width="16" height="224"/>
+                                            <rect key="frame" x="425" y="0.0" width="15" height="224"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
                                     </scrollView>
@@ -404,7 +404,7 @@
             <objects>
                 <customObject id="piV-sk-Uwr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
                 <windowController id="zH5-iL-OZL" sceneMemberID="viewController">
-                    <window key="window" title="Buffer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="aMz-MW-DdC">
+                    <window key="window" title="Video Buffer" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="aMz-MW-DdC">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="245" y="301" width="480" height="270"/>
@@ -418,7 +418,7 @@
                     </connections>
                 </windowController>
             </objects>
-            <point key="canvasLocation" x="1210" y="307"/>
+            <point key="canvasLocation" x="1227" y="308"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="7F0-vm-cVe">
@@ -581,26 +581,57 @@
                     <view key="view" wantsLayer="YES" id="IfV-nR-MeC">
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9sb-gI-6Fh">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="u40-Av-uw1"/>
-                            </imageView>
-                        </subviews>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="9sb-gI-6Fh" secondAttribute="trailing" id="6Hg-2h-jG3"/>
-                            <constraint firstAttribute="bottom" secondItem="9sb-gI-6Fh" secondAttribute="bottom" id="LgH-Rs-pje"/>
-                            <constraint firstItem="9sb-gI-6Fh" firstAttribute="top" secondItem="IfV-nR-MeC" secondAttribute="top" id="VKh-g6-gXU"/>
-                            <constraint firstItem="9sb-gI-6Fh" firstAttribute="leading" secondItem="IfV-nR-MeC" secondAttribute="leading" id="uUu-9z-ggb"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="screenImage" destination="9sb-gI-6Fh" id="DYU-4L-XRj"/>
-                    </connections>
                 </viewController>
                 <customObject id="1Fr-1M-GLs" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1210" y="700"/>
+            <point key="canvasLocation" x="1234" y="812"/>
+        </scene>
+        <!--Debug Tile Map View Controller-->
+        <scene sceneID="iHh-He-Upr">
+            <objects>
+                <viewController id="wWU-8n-oX6" customClass="DebugTileMapViewController" customModule="emu" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" wantsLayer="YES" id="B5w-fs-QuQ">
+                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="EYA-Fu-TV1">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="RFX-4H-3sb"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="EYA-Fu-TV1" secondAttribute="bottom" id="GaX-sY-yep"/>
+                            <constraint firstItem="EYA-Fu-TV1" firstAttribute="leading" secondItem="B5w-fs-QuQ" secondAttribute="leading" id="Ho7-C8-Kvg"/>
+                            <constraint firstItem="EYA-Fu-TV1" firstAttribute="top" secondItem="B5w-fs-QuQ" secondAttribute="top" id="gSg-6h-oMp"/>
+                            <constraint firstAttribute="trailing" secondItem="EYA-Fu-TV1" secondAttribute="trailing" id="r09-8m-LD9"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <customObject id="KpF-QP-Lnr" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2340" y="725"/>
+        </scene>
+        <!--Window Controller-->
+        <scene sceneID="qJV-jz-Sfn">
+            <objects>
+                <windowController storyboardIdentifier="DebugTileMapViewController" id="qLw-yJ-6VU" sceneMemberID="viewController">
+                    <window key="window" title="Tile Map" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="Otm-ZT-d1E">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="245" y="301" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <connections>
+                            <outlet property="delegate" destination="qLw-yJ-6VU" id="gFw-QC-k2I"/>
+                        </connections>
+                    </window>
+                    <connections>
+                        <segue destination="wWU-8n-oX6" kind="relationship" relationship="window.shadowedContentViewController" id="P48-mj-ZgL"/>
+                    </connections>
+                </windowController>
+                <customObject id="xc7-30-gra" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2340" y="288"/>
         </scene>
     </scenes>
 </document>

@@ -1,11 +1,13 @@
 import Foundation
+import Cocoa
+
 
 extension VRAM {
   static var begin: UInt16 = 0x8000
   static var end: UInt16 = 0x9FFF
   static var size: UInt16 = end - begin + 1
   
-  private static var standardRange: Range<Int> = (0..<8)
+  private static var tileIteration: [Int] = (0..<8).reversed()
   
   static var tileSize: UInt16 = 16
   static var tileLimit = 384
@@ -15,7 +17,7 @@ extension VRAM {
     
     init() {
       rows = []
-      standardRange.forEach { _ in
+      tileIteration.forEach { _ in
         rows.append(Row())
       }
     }
@@ -26,6 +28,12 @@ extension VRAM {
     
     func updateRow(_ row: UInt16, low: UInt8, high: UInt8) {
       rows[row].update(low: low, high: high)
+    }
+    
+    func render(canvas: inout BitmapCanvas, offset: NSPoint) {
+      rows.enumerated().forEach { (i, el) in
+        el.render(canvas: &canvas, offset: NSPoint(x: offset.x, y: offset.y + CGFloat(i)))
+      }
     }
   }
   
@@ -41,7 +49,7 @@ extension VRAM {
     
     init() {
       pixelValues = []
-      standardRange.forEach { _ in
+      tileIteration.forEach { _ in
         pixelValues.append(.zero)
       }
     }
@@ -54,15 +62,17 @@ extension VRAM {
     }
     
     private func recalculatePixelValues() {
-      standardRange.forEach {
-        let i = UInt8(clamping: $0)
+      tileIteration.forEach { pixelValues[$0] = PixelValue(lsb: low.bit($0), msb: high.bit($0)) }
+    }
+    
+    func render(canvas: inout BitmapCanvas, offset: NSPoint) {
+      tileIteration.forEach {
+        let i = 7 - $0
+        let el = pixelValues[$0]
         
-        let mask = 1 << (7 - i)
-        let lsb = low & mask
-        let msb = high & mask
-        
-        pixelValues[i] = PixelValue(lsb: lsb, msb: msb)
+        canvas.setColor(NSPoint(x: offset.x + CGFloat(i), y: offset.y), color: el.defaultColor)
       }
+      
     }
   }
   
@@ -71,10 +81,19 @@ extension VRAM {
     
     var stringRepresentation: String {
       switch self {
-      case .zero: return "0"
-      case .one: return "1"
-      case .two: return "2"
-      case .three: return "3"
+      case .zero: return "  "
+      case .one: return "01"
+      case .two: return "02"
+      case .three: return "03"
+      }
+    }
+    
+    var defaultColor: NSColor {
+      switch self {
+      case .zero: return .white
+      case .one: return .lightGray
+      case .two: return .darkGray
+      case .three: return .black
       }
     }
     

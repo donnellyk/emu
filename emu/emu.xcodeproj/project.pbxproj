@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0A04C2DE226141F3005F8842 /* Canvas.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A04C2DD226141F3005F8842 /* Canvas.swift */; };
+		0A0CA926244277CE00EE99E6 /* DebugTileMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA925244277CE00EE99E6 /* DebugTileMapViewController.swift */; };
+		0A0CA9282443A2FE00EE99E6 /* ConvienceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0CA9272443A2FE00EE99E6 /* ConvienceTests.swift */; };
 		0A2FC840243A474D0028EDEB /* VRAM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FC83F243A474D0028EDEB /* VRAM.swift */; };
 		0A2FC842243A47640028EDEB /* VRAM+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A2FC841243A47640028EDEB /* VRAM+Extensions.swift */; };
 		0A3EE0A221F80C66000C26A2 /* Conveniences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3EE0A121F80C66000C26A2 /* Conveniences.swift */; };
@@ -47,6 +49,8 @@
 
 /* Begin PBXFileReference section */
 		0A04C2DD226141F3005F8842 /* Canvas.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Canvas.swift; sourceTree = "<group>"; };
+		0A0CA925244277CE00EE99E6 /* DebugTileMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugTileMapViewController.swift; sourceTree = "<group>"; };
+		0A0CA9272443A2FE00EE99E6 /* ConvienceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConvienceTests.swift; sourceTree = "<group>"; };
 		0A2FC83F243A474D0028EDEB /* VRAM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VRAM.swift; sourceTree = "<group>"; };
 		0A2FC841243A47640028EDEB /* VRAM+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VRAM+Extensions.swift"; sourceTree = "<group>"; };
 		0A3EE0A121F80C66000C26A2 /* Conveniences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Conveniences.swift; sourceTree = "<group>"; };
@@ -146,6 +150,7 @@
 			isa = PBXGroup;
 			children = (
 				0AC6A45421D83AA300E3FA19 /* emuTests.swift */,
+				0A0CA9272443A2FE00EE99E6 /* ConvienceTests.swift */,
 				0AC6A45621D83AA300E3FA19 /* Info.plist */,
 			);
 			path = emuTests;
@@ -177,6 +182,7 @@
 				0ACF0F582223782A00E19A49 /* DebugService.swift */,
 				0ACF0F5A222387D300E19A49 /* DebugViewController.swift */,
 				0AA361F82291A9D50045E0ED /* DebugVideoBufferViewController.swift */,
+				0A0CA925244277CE00EE99E6 /* DebugTileMapViewController.swift */,
 				0A5A80C32299ECA000FF582E /* DebugMemoryViewController.swift */,
 			);
 			path = Debug;
@@ -288,6 +294,7 @@
 			files = (
 				0AC6A44421D83AA000E3FA19 /* ViewController.swift in Sources */,
 				0A04C2DE226141F3005F8842 /* Canvas.swift in Sources */,
+				0A0CA926244277CE00EE99E6 /* DebugTileMapViewController.swift in Sources */,
 				0AC6A46421D83ACA00E3FA19 /* Instructions.swift in Sources */,
 				0ACF0F552223570700E19A49 /* Instruction+Debug.swift in Sources */,
 				0A2FC842243A47640028EDEB /* VRAM+Extensions.swift in Sources */,
@@ -314,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A0CA9282443A2FE00EE99E6 /* ConvienceTests.swift in Sources */,
 				0AC6A45521D83AA300E3FA19 /* emuTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -391,7 +399,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -446,7 +454,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.14;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;

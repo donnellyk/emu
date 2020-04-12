@@ -28,5 +28,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     device.boot(cartridge: Cartridge())
   }
+  
+  func launchTileMapController(canvas: BitmapCanvas) {
+    let debugController: NSWindowController = mainStoryboard.instantiateController(identifier: "DebugTileMapViewController")
+
+    (debugController.contentViewController as? DebugTileMapViewController)?.display(canvas)
+    
+    debugController.showWindow(self)
+  }
 }
 

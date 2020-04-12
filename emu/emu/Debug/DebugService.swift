@@ -78,6 +78,7 @@ extension DebugService {
   
   func vramDump() {
     print(device.cpu.mmu.vram.stringRepresentation)
+    (NSApplication.shared.delegate as! AppDelegate).launchTileMapController(canvas: device.cpu.mmu.vram.imageRepresentation)
   }
 }
 
