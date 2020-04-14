@@ -7,7 +7,7 @@ extension VRAM {
   static var end: UInt16 = 0x9FFF
   static var size: UInt16 = end - begin + 1
   
-  private static var tileIteration: [Int] = (0..<8).reversed()
+  private static var tileIteration: Range<Int> = (0..<8)
   
   static var tileSize: UInt16 = 16
   static var tileLimit = 384
@@ -62,12 +62,15 @@ extension VRAM {
     }
     
     private func recalculatePixelValues() {
-      tileIteration.forEach { pixelValues[$0] = PixelValue(lsb: low.bit($0), msb: high.bit($0)) }
+      tileIteration.forEach {
+        let i = 7 - $0
+        pixelValues[$0] = PixelValue(lsb: low.bit(i), msb: high.bit(i))
+      }
     }
     
     func render(canvas: inout BitmapCanvas, offset: NSPoint) {
       tileIteration.forEach {
-        let i = 7 - $0
+        let i = $0 //7 - $0
         let el = pixelValues[$0]
         
         canvas.setColor(NSPoint(x: offset.x + CGFloat(i), y: offset.y), color: el.defaultColor)
@@ -81,10 +84,10 @@ extension VRAM {
     
     var stringRepresentation: String {
       switch self {
-      case .zero: return "  "
-      case .one: return "01"
-      case .two: return "02"
-      case .three: return "03"
+      case .zero: return "__"
+      case .one: return "XX"
+      case .two: return "YY"
+      case .three: return "ZZ"
       }
     }
     
