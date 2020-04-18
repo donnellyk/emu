@@ -186,7 +186,7 @@ class BitmapCanvas {
   }
   
   fileprivate func _setColor(_ p:NSPoint, pixelBuffer:UnsafeMutablePointer<UInt8>, normalizedColor:NSColor) {
-    let offset = 4 * ((Int(self.width) * Int(p.x) + Int(p.y)))
+    let offset = 4 * ((Int(self.width) * Int(p.y) + Int(p.x)))
     
     pixelBuffer[offset] = UInt8(normalizedColor.redComponent * 255.0)
     pixelBuffer[offset+1] = UInt8(normalizedColor.greenComponent * 255.0)

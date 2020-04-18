@@ -11,13 +11,12 @@ class VRAM {
   var imageRepresentation: BitmapCanvas {
     let col = 16 * 8
     let row = (tiles.count / 16) * 8
-    
     var canvas = BitmapCanvas(col, row)
     tiles.enumerated().forEach { (i, el) in
       let x = (i % 16) * 8
       let y = (i/16) * 8
-      el.render(canvas: &canvas, offset: NSPoint(x: y, y: x))
-      
+      el.render(canvas: &canvas, offset: NSPoint(x: x, y: y))
+
       let bitmap = canvas.bitmapImageRep
 
     }
