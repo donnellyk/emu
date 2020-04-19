@@ -1,9 +1,22 @@
 import Cocoa
 
-class DebugVideoBufferViewController: NSViewController {
+class ImageViewController: NSViewController {
+  var image: NSImage? {
+    set {
+      self.view.layer = CALayer()
+      self.view.layer?.allowsEdgeAntialiasing = false
+      self.view.layer?.contentsGravity = .resizeAspect
+      self.view.layer?.contents = newValue
+      self.view.wantsLayer = true
+    }
+    get {
+      return nil
+    }
+  }
+}
+
+class DebugVideoBufferViewController: ImageViewController {
   var queue: DispatchQueue = DispatchQueue(label: "Render")
-  
-  @IBOutlet weak var screenImage: NSImageView!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -19,6 +32,17 @@ class DebugVideoBufferViewController: NSViewController {
 }
 
 extension DebugVideoBufferViewController : Screen {
+  func display(_ canvas: BitmapCanvas) {
+    queue.async {
+      let bitmap = canvas.bitmapImageRep
+      let image = NSImage(cgImage: bitmap.cgImage!, size: bitmap.size)
+
+      DispatchQueue.main.async {
+        self.image = image
+      }
+    }
+  }
+  
   func display(_ bitmap: PPU.BitMap) {
     queue.async {
       guard let cgImage = bitmap.makeImage() else {
@@ -28,7 +52,7 @@ extension DebugVideoBufferViewController : Screen {
       let image = NSImage(cgImage: cgImage, size: NSMakeSize(256, 256))
       
       DispatchQueue.main.async {
-        self.screenImage.image = image
+        self.image = image
       }
     }
   }

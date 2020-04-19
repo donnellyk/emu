@@ -1,21 +1,7 @@
 import Cocoa
 
-class DebugTileMapViewController: NSViewController {
+class DebugTileMapViewController: ImageViewController {
   var queue: DispatchQueue = DispatchQueue(label: "Render")
-
-  var image: NSImage? {
-    set {
-      self.view.layer = CALayer()
-      self.view.layer?.allowsEdgeAntialiasing = false
-      self.view.layer?.contentsGravity = .resizeAspect
-      self.view.layer?.contents = newValue
-      self.view.wantsLayer = true
-
-    }
-    get {
-      return nil
-    }
-  }
 }
 
 extension DebugTileMapViewController {

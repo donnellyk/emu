@@ -2,6 +2,11 @@ import Foundation
 
 protocol Screen : class {
   func display(_ bitmap: PPU.BitMap)
+  func display(_ canvas: BitmapCanvas)
+}
+
+extension Screen {
+  func display(_ canvas: BitmapCanvas) { }
 }
 
 public class Device {
