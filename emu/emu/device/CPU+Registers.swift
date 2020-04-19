@@ -141,11 +141,12 @@ public extension CPU {
     }
     
     func prettyPrint() -> String {
-      return """
-      Flags
-      Z: \(z), N: \(n), H: \(h), C: \(c)
+      let zS = z ? "Z" : "-"
+      let nS = n ? "N" : "-"
+      let hS = h ? "H" : "-"
+      let cS = h ? "C" : "-"
       
-      """
+      return "Flags: [\(zS + nS + hS + cS)]"
     }
   }
   
@@ -202,15 +203,11 @@ public extension CPU {
     func prettyPrint() -> String {
       return """
       CPU Registers
-      a - \(a.toHex)
-      b - \(b.toHex)
-      c - \(c.toHex)
-      d - \(d.toHex)
-      e - \(e.toHex)
-      f - \(flags.byteValue.toHex)
-      hl - \(hl.toHex)
-      pc - \(pc.toHex)
-      sp - \(sp.toHex)
+      A: \(a.toShortHex) F: \(flags.byteValue.toShortHex) (AF: \(a.toShortHex + flags.byteValue.toShortHex))
+      B: \(b.toShortHex) C: \(c.toShortHex) (BC: \(b.toShortHex + c.toShortHex))
+      D: \(b.toShortHex) E: \(c.toShortHex) (DE: \(d.toShortHex + e.toShortHex))
+      H: \(h.toShortHex) L: \(l.toShortHex) (HL: \(h.toShortHex + l.toShortHex))
+      PC: \(pc.toHex) SP: \(sp.toHex)
       
       \(flags.prettyPrint())
       """

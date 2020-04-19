@@ -35,6 +35,10 @@ extension UInt16 {
 }
 
 extension UInt8 {
+  var toShortHex : String {
+    return String(format:"%02X", self)
+  }
+  
   var toHex: String {
     return UInt16(clamping: self).toHex
   }
