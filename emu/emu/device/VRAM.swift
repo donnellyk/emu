@@ -2,7 +2,7 @@ import Foundation
 
 class VRAM {
   private var vram: [UInt8]
-  private var tiles: [Tile]
+  var tiles: [Tile]
   
   var stringRepresentation: String {
     return tiles.map{ $0.stringRepresentation }.joined(separator: "\n\n")
@@ -16,9 +16,6 @@ class VRAM {
       let x = (i % 16) * 8
       let y = (i/16) * 8
       el.render(canvas: &canvas, offset: NSPoint(x: x, y: y))
-
-      let bitmap = canvas.bitmapImageRep
-
     }
     
     return canvas

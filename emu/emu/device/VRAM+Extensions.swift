@@ -75,7 +75,6 @@ extension VRAM {
         
         canvas.setColor(NSPoint(x: offset.x + CGFloat(i), y: offset.y), color: el.defaultColor)
       }
-      
     }
   }
   
@@ -90,19 +89,12 @@ extension VRAM {
       case .three: return "ZZ"
       }
     }
+
     
-    var defaultColor: NSColor {
-      // Boot Color Palette
-//      switch self {
-//      case .one: return .white
-//      case .zero, .two, .three : return .black
-//      }
-//
+    var defaultColor: NSColor {      
       switch self {
       case .zero: return .white
-      case .one: return .black
-      case .two: return .black
-      case .three: return .black
+      case .one, .two, .three: return .black
       }
     }
       
