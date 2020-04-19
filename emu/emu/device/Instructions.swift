@@ -6,6 +6,7 @@ typealias CycleCalculation = (CPU) -> Int
 
 struct Instruction {
   var opcode: Int
+  var opCodeHex: String
   var cycles: CycleCalculation
   var operation: Operation
   
@@ -15,6 +16,7 @@ struct Instruction {
   
   init(opcode: Int, operation: @escaping Operation, cycles: @escaping CycleCalculation) {
     self.opcode = opcode
+    self.opCodeHex = UInt16(clamping: opcode).toHex
     self.cycles = cycles
     self.operation = operation
   }
@@ -285,7 +287,7 @@ struct I {
     Instruction(opcode: 0xE7, operation: restart(20), cycles: 16),
     Instruction(opcode: 0xE8, operation: add_sp(), cycles: 16),
     Instruction(opcode: 0xE9, operation: jp_hl(), cycles: 4),
-    Instruction(opcode: 0xEA, operation: ldh_a_n(), cycles: 16),
+    Instruction(opcode: 0xEA, operation: ld_n_a(), cycles: 16),
     Instruction(opcode: 0xEB, operation: { _ in assertionFailure() }),
     Instruction(opcode: 0xEC, operation: { _ in assertionFailure() }),
     Instruction(opcode: 0xED, operation: { _ in assertionFailure() }),
@@ -303,7 +305,7 @@ struct I {
     Instruction(opcode: 0xF7, operation: restart(30), cycles: 16),
     Instruction(opcode: 0xF8, operation: ldd_hl_sp_n(), cycles: 12),
     Instruction(opcode: 0xF9, operation: ldd_sp_hl(), cycles: 8),
-    Instruction(opcode: 0xFA, operation: ldh_a_n(), cycles: 16),
+    Instruction(opcode: 0xFA, operation: ld_a_n(), cycles: 16),
     Instruction(opcode: 0xFB, operation: { _ in /* TODO: EI */ }),
     Instruction(opcode: 0xFC, operation: { _ in assertionFailure() }),
     Instruction(opcode: 0xFD, operation: { _ in assertionFailure() }),
@@ -410,6 +412,24 @@ struct I {
     return {
       ld_r_r(.hl, .a)($0)
       inc(.hl)($0)
+    }
+  }
+  
+  static func ld_n_a() -> Operation {
+    return {
+      let value = Register.a.get8($0)
+      let address = UInt16($0.nextWord())
+      
+      $0.mmu.write(value, at: address)
+    }
+  }
+  
+  static func ld_a_n() -> Operation {
+    return {
+      let address = UInt16($0.nextWord())
+      let value: UInt8 = $0.mmu.read(address)
+      
+      Register.a.set(value, in: $0)
     }
   }
   
