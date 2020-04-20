@@ -198,6 +198,10 @@ class BitmapCanvas {
     
     let color = color_.color
     
+    guard p.x <= width, p.y <= height else {
+      return
+    }
+    
     guard let normalizedColor = color.usingColorSpaceName(NSColorSpaceName.calibratedRGB) else {
       print("-- cannot normalize color \(color)")
       return
