@@ -205,7 +205,7 @@ public extension CPU {
       CPU Registers
       A: \(a.toShortHex) F: \(flags.byteValue.toShortHex) (AF: \(a.toShortHex + flags.byteValue.toShortHex))
       B: \(b.toShortHex) C: \(c.toShortHex) (BC: \(b.toShortHex + c.toShortHex))
-      D: \(b.toShortHex) E: \(c.toShortHex) (DE: \(d.toShortHex + e.toShortHex))
+      D: \(b.toShortHex) E: \(e.toShortHex) (DE: \(d.toShortHex + e.toShortHex))
       H: \(h.toShortHex) L: \(l.toShortHex) (HL: \(h.toShortHex + l.toShortHex))
       PC: \(pc.toHex) SP: \(sp.toHex)
       
