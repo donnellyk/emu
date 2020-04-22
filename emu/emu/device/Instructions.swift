@@ -75,7 +75,7 @@ struct I {
     Instruction(opcode: 0x2B, operation: dec(.hl), cycles: 8),
     Instruction(opcode: 0x2C, operation: inc(.l)),
     Instruction(opcode: 0x2D, operation: dec(.l)),
-    Instruction(opcode: 0x2E, operation: ld_r_nn(.e), cycles: 8),
+    Instruction(opcode: 0x2E, operation: ld_r_nn(.l), cycles: 8),
     Instruction(opcode: 0x2F, operation: cpl()),
     
     // 0x3n
