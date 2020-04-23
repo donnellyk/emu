@@ -65,7 +65,12 @@ public class MMU {
   }
   
   public func copy() -> [UInt8] {
-    return [UInt8](memory)
+    var copy = [UInt8](memory)
+    if inBios {
+      copy.replaceSubrange(0x0000...0x00FF, with: bios.data)
+    }
+    
+    return copy
   }
   
   public func read(_ register: RegisterAddress) -> UInt8 {
