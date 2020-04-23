@@ -1,4 +1,5 @@
 import Cocoa
+import Foundation
 
 extension NSNotification.Name {
   static let DebugServiceDidPause = NSNotification.Name("DebugServiceDidPause")
@@ -102,12 +103,33 @@ private extension DebugService {
   }
   
   func renderVideoBuffer() {
-    guard let debugScreen = debugScreen else {
-      return
+//    guard let debugScreen = debugScreen else {
+//      return
+//    }
+//
+//    let fullBuffer = device.gpu.renderEntireBuffer()
+//    debugScreen.display(fullBuffer)
+    
+    var canvas = BitmapCanvas(256, 256)
+    (0x9800..<0x9BFF).forEach {
+      let i = $0 - 0x9800
+      let tileID: UInt8 = device.cpu.mmu.read(UInt16(clamping: $0))
+      
+      let x = (i % 32) * 8
+      let y = (i / 32) * 8
+      
+      let tile = device.cpu.mmu.vram.tiles[tileID]
+      
+      tile.render(canvas: &canvas, offset: NSPoint(x: x, y: y))
     }
     
-    let fullBuffer = device.gpu.renderEntireBuffer()
-    debugScreen.display(fullBuffer)
+    let x = device.cpu.mmu.read(.scx)
+    let y = device.cpu.mmu.read(.scy)
+    canvas.rectangle(NSRect(x: Int(x), y: Int(y), width: 160, height: 144), stroke: "#FF0000", fill: nil)
+
+    debugScreen?.display(canvas)
+    
+//    device.cpu.mmu.read
   }
   
   func cPrint(_ text: String, override: Bool = false) {
@@ -133,6 +155,8 @@ extension DebugService {
   var prettyRegisterValues: String {
     return """
     \(device.cpu.registers.prettyPrint())
+    
+    Next: \(device.cpu.nextInstruction())
     """
   }
   

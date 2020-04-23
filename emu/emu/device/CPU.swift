@@ -35,6 +35,12 @@ public class CPU {
     return instruction.cycles(self)
   }
   
+  func nextInstruction() -> String {
+    let pc: UInt8 = lookAhead()
+    let instruction = I.table[pc]
+    return instruction.opCodeString(nextByte: lookAhead(), nextWord: lookAhead())
+  }
+  
   /// Reads 8-bit value from program counter address and increments counter
   ///
   /// - Returns: Value from memory
